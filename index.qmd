@@ -1,0 +1,209 @@
+---
+title: "Optimización del Rendimiento en Shiny"
+subtitle: "Técnicas y Mejores Prácticas"
+author: "Samuel Calderon"
+format: 
+  revealjs:
+    theme: default
+    transition: slide
+    slide-number: true
+    chalkboard: true
+---
+
+## Requisitos del Taller {.smaller}
+
+- R 4.1.0 o mayor
+- RStudio instalado
+- 8GB RAM (deseable)
+- Internet estable (deseable)
+- Git instalado (deseable)
+- Alternativa: cuenta en posit.cloud
+
+## Estructura del Taller (3 horas) {.smaller}
+
+- Introducción 
+- Ciclo de optimización
+- Ejercicio 1 - Benchmarking
+- Profiling
+- Ejercicio 2 - Profiling
+- Optimización - Data
+- Ejercicio 3 - Data
+- Optimización - Shiny
+- Ejercicio 4 - Shiny
+- Optimización - Async
+- Ejercicio 5 - Async
+- Benckmarking avanzado
+- Preguntas
+
+## Ciclo de Optimización:
+
+- Benchmarking - diagnóstico inicial
+- Profiling - identificación de cuellos de botella
+- Estimación - recursos necesarios
+- Optimización - implementación de mejoras
+
+### Tipos de benchmarking 
+
+- Manual
+- Avanzado (shinyloadtest)
+
+## Ejercicio 1 - Benchmarking
+
+Prueba la app y anota cuánto tiempo te toma...
+
+## Profiling
+
+## Profiling - Herramientas en R
+
+El profiling es una técnica utilizada para identificar cuellos de botella en el rendimiento de tu código:
+
+1. **profvis**: Es una herramienta interactiva que proporciona una visualización detallada del tiempo de ejecución de tu código.
+
+- Instalación:
+    ```r
+    install.packages("profvis")
+    ```
+- Uso básico:
+    ```r
+    library(profvis)
+    profvis({
+    # Código a perfilar
+    })
+    ```
+2. **shiny.tictoc**: Una herramienta que usa Javascript para calcular el tiempo que toman las acciones en la app, desde el punto de vista del navegador.
+
+## Ejercicio 2 - Profiling
+
+Realiza el profiling de la app para las siguientes acciones:
+
+- ...
+- ...
+
+¿Cuáles son los puntos más críticos?
+
+## Optimización - Data
+
+1. Usar opciones más rápidas para cargar datos
+2. Usar formatos de archivo más eficientes
+3. Pre-procesar los cálculos
+4. Usar bases de datos. Puede requerir aprender SQL.
+
+¡Puedes combinar todo!
+
+### Cargar datos más rápido
+
+- data.table::fread()
+- vroom::vroom()
+- readr::read_csv()
+
+### Ejemplo
+
+NO ejecutar durante el workshop porque toma tiempo en correr
+
+```r
+suppressMessages(
+  microbenchmark::microbenchmark(
+    read.csv = read.csv("data/personal.csv"),
+    read_csv = readr::read_csv("data/personal.csv"),
+    vroom = vroom::vroom("data/personal.csv"),
+    fread = data.table::fread("data/personal.csv")
+  )
+)
+#> Unit: milliseconds
+#>      expr       min        lq      mean    median        uq       max neval
+#>  read.csv 1891.3824 2007.2517 2113.5217 2082.6016 2232.7825 2442.6901   100
+#>  read_csv  721.9287  820.4181  873.4603  866.7321  897.3488 1165.5929   100
+#>     vroom  176.7522  189.8111  205.2099  197.9027  206.2619  495.2784   100
+#>     fread  291.9581  370.8261  410.3995  398.9489  439.7827  638.0363   100
+```
+
+
+### Formatos de datos eficientes:
+
+- Parquet (via {arrow})
+- Feather (compatibilidad con Python)
+- fst
+- RDS (nativo de R)
+
+### Ejemplo
+
+NO ejecutar durante el workshop porque toma tiempo en correr
+
+```r
+suppressMessages(
+  microbenchmark::microbenchmark(
+    read.csv = read.csv("data/personal.csv"),
+    fst = fst::read_fst("data/personal.fst"),
+    parquet = arrow::read_parquet("data/personal.parquet"),
+    rds = readRDS("data/personal.rds")
+  )
+)
+#> Unit: milliseconds
+#>      expr       min         lq       mean     median         uq      max neval
+#>  read.csv 1911.2919 2075.26525 2514.29114 2308.57325 2658.03690 4130.748   100
+#>       fst  201.1500  267.85160  339.73881  308.24680  357.19565  834.646   100
+#>   parquet   64.5013   67.29655   84.48485   70.70505   87.81995  405.147   100
+#>       rds  558.5518  644.32460  782.37898  695.07300  860.85075 1379.519   100
+```
+
+### Pre-procesar cálculos
+
+- Filtrado previo: Realiza el filtrado de datos antes de realizar cálculos complejos para reducir el tamaño del conjunto de datos.
+- Agregación previa: Agrega los datos en una etapa temprana para reducir la cantidad de datos que necesitan ser procesados.
+- Transformaciones previas: Realiza transformaciones de datos antes de usarlos en la aplicación para evitar cálculos repetitivos.
+- **Uso de índices**: Crea índices en tus datos para acelerar las operaciones de búsqueda y filtrado.
+
+Personalmente, mi estrategia favorita. Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, data en streaming). Es, en esencia, *caching*.
+
+### Bases de Datos
+
+- **Escalabilidad**: Las bases de datos pueden manejar grandes volúmenes de datos de manera eficiente.
+- **Consultas Rápidas**: Permiten realizar consultas complejas de manera rápida.
+- **Persistencia**: Los datos se almacenan de manera persistente, lo que permite su recuperación en cualquier momento.
+- Algunos ejemplos notables son SQLite, MySQL, PostgreSQL, DuckDB.
+  
+
+## Ejercicio 3 - Data
+
+Implementa una estrategia de optimización
+
+## Optimización - Shiny
+
+Del lado de shiny, optimizar consiste básicamente en hacer que la app (en realidad, el procesador) haga el menor trabajo posible.
+
+### Controlar reactividad
+
+1. bindEvent() - observeEvent() / eventReactive()
+
+### Estrategias de Caché
+
+1. bindCache()
+
+2. Niveles de caché:
+   - Nivel aplicación: `cache = "app"`
+   - Nivel sesión: `cache = "session"`
+
+### Comunicación servidor / navegador
+
+- Reducir en tamaño y frecuencia lo que se manda al *cliente*.
+
+
+## Ejercicio 4 - Shiny
+
+
+
+## Optimización - Async
+
+### Programación Asíncrona {.smaller}
+
+- Casos de uso:
+  - Operaciones I/O (bases de datos, APIs)
+  - Cálculos intensivos
+- Herramientas:
+  - Paquetes {promises} y {future}
+  - ExtendedTask (Shiny 1.8.1+)
+
+## Ejercicio 5 - Async
+
+
+## Preguntas
