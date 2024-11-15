@@ -7,42 +7,49 @@ format:
     theme: default
     transition: slide
     slide-number: true
-    chalkboard: true
+    logo: img/Appsilon_logo.svg
+    footer: "LatinR: 2024-11-18"
+mermaid: 
+  theme: default
 ---
 
-## Requisitos del Taller {.smaller}
+## Intro
 
-- R 4.1.0 o mayor
-- RStudio instalado
-- 8GB RAM (deseable)
-- Internet estable (deseable)
-- Git instalado (deseable)
-- Alternativa: cuenta en posit.cloud
+- Quien soy
 
-## Estructura del Taller (3 horas) {.smaller}
+## Appsilon
+
+![](img/appsilon-web.png)
+
+<https://www.appsilon.com/>
+
+## We are hiring!
+
+- [R shiny developer](https://jobs.lever.co/appsilon/6e6cea0f-4ec3-439a-8456-d5e31e51c05b?lever-origin=ap%5B%E2%80%A6%5Dloper)
+- [R developer with life science](https://jobs.lever.co/appsilon/d5c698a5-9f93-4fb4-a22b-b4abaf77de5d?lever-origin=applied&lever-source%5B%5D=CAREERS)
+- [Project Manager (US time zone)](https://jobs.lever.co/appsilon/e8594bfe-2c9a-4504-b978-ff3242bc9c73?lever-origin=applied&lever-source%5B%5D=careers%20page?utm_medium%3Djob-boards)
+
+Para ver más posiciones: <https://www.appsilon.com/careers>
+
+## Estructura del Taller (3 horas)
 
 - Introducción 
-- Ciclo de optimización
-- Ejercicio 1 - Benchmarking
-- Profiling
-- Ejercicio 2 - Profiling
-- Optimización - Data
-- Ejercicio 3 - Data
-- Optimización - Shiny
-- Ejercicio 4 - Shiny
-- Optimización - Async
-- Ejercicio 5 - Async
-- Benckmarking avanzado
+- Ciclo de optimización: Ejercicio 1 - Benchmarking
+- Profiling: Ejercicio 2
+- Optimización - Data: Ejercicio 3
+- Optimización - Shiny: Ejercicio 4
+- Optimización - Async: Ejercicio 5
+- Temas avanzados
 - Preguntas
 
 ## Ciclo de Optimización:
 
-- Benchmarking - diagnóstico inicial
-- Profiling - identificación de cuellos de botella
-- Estimación - recursos necesarios
-- Optimización - implementación de mejoras
+- Benchmarking: ¿Performa como esperamos?
+- Profiling: ¿Dónde están los cuellos de botella?
+- Estimación/Recomendación: ¿Qué puedo hacer?
+- Optimización: Hagámoslo
 
-### Tipos de benchmarking 
+## Tipos de benchmarking 
 
 - Manual
 - Avanzado (shinyloadtest)
@@ -51,33 +58,96 @@ format:
 
 Prueba la app y anota cuánto tiempo te toma...
 
-## Profiling
+# Profiling
 
 ## Profiling - Herramientas en R
 
 El profiling es una técnica utilizada para identificar cuellos de botella en el rendimiento de tu código:
 
-1. **profvis**: Es una herramienta interactiva que proporciona una visualización detallada del tiempo de ejecución de tu código.
+## `{profvis}`
+
+Es una herramienta interactiva que proporciona una visualización detallada del tiempo de ejecución de tu código.
 
 - Instalación:
-    ```r
-    install.packages("profvis")
-    ```
+
+```r
+install.packages("profvis")
+```
+
 - Uso básico:
-    ```r
-    library(profvis)
-    profvis({
-    # Código a perfilar
-    })
-    ```
-2. **shiny.tictoc**: Una herramienta que usa Javascript para calcular el tiempo que toman las acciones en la app, desde el punto de vista del navegador.
+
+```r
+library(profvis)
+profvis({
+# Código a perfilar
+})
+```
+
+## shiny.tictoc
+
+Una herramienta que usa Javascript para calcular el tiempo que toman las acciones en la app, desde el punto de vista del navegador.
+
+Es super fácil de añadir a una app.
+
+```r
+tags$script(
+    src = "https://cdn.jsdelivr.net/gh/Appsilon/shiny.tictoc@v0.2.0/shiny-tic-toc.min.js"
+)
+```
+
+---
+
+Ejecutar cualquiera de estas operaciones en la consola de Javascript. 
+
+```js
+// Print out all measurements
+showAllMeasurements()
+
+// To download all measurements as a CSV file
+exportMeasurements()
+
+// To print out summarised measurements (slowest rendering output, slowest server computation)
+showSummarisedMeasurements()
+
+// To export an html file that visualizes measurements on a timeline
+await exportHtmlReport()
+```
+
+Muchos navegadores cuentan con herramientas de desarrollador donde puedes encontrar una mientras tu app está corriendo.
+
+## Usando profvis
+
+Ubicar la herramienta en Rstudio
+
+![](img/profiling-01.png)
+
+---
+
+La consola de R mostrará el botón "Stop profiling". Esto significa que el profiler está activado.
+
+![](img/profiling-02.png)
+
+Corre tu shiny app e interactúa con ella. Luego, puedes detener la app y el profiler.
+
+---
+
+El panel de edición de Rstudio te mostrará una nueva vista. 
+
+![](img/profiling-03.png)
+
+La parte superior hace profiling de cada línea de código, la parte inferior muestra un *FlameGraph*, que indica el tiempo requerido por cada operación.
+
+---
+
+También puede accederse a la pestaña "Data".
+
+![](img/profiling-04.png)
+
+Esta indica cuánto tiempo y memoria se ha requerido por cada operación. Nos da un resumen de la medición.
 
 ## Ejercicio 2 - Profiling
 
-Realiza el profiling de la app para las siguientes acciones:
-
-- ...
-- ...
+Interpreta los resultados
 
 ¿Cuáles son los puntos más críticos?
 
@@ -90,13 +160,13 @@ Realiza el profiling de la app para las siguientes acciones:
 
 ¡Puedes combinar todo!
 
-### Cargar datos más rápido
+## Cargar datos más rápido
 
 - data.table::fread()
 - vroom::vroom()
 - readr::read_csv()
 
-### Ejemplo
+## Ejemplo
 
 NO ejecutar durante el workshop porque toma tiempo en correr
 
@@ -118,14 +188,14 @@ suppressMessages(
 ```
 
 
-### Formatos de datos eficientes:
+## Formatos de datos eficientes:
 
 - Parquet (via {arrow})
 - Feather (compatibilidad con Python)
 - fst
 - RDS (nativo de R)
 
-### Ejemplo
+## Ejemplo
 
 NO ejecutar durante el workshop porque toma tiempo en correr
 
@@ -146,36 +216,42 @@ suppressMessages(
 #>       rds  558.5518  644.32460  782.37898  695.07300  860.85075 1379.519   100
 ```
 
-### Pre-procesar cálculos
+## Pre-procesar cálculos
 
-- Filtrado previo: Realiza el filtrado de datos antes de realizar cálculos complejos para reducir el tamaño del conjunto de datos.
-- Agregación previa: Agrega los datos en una etapa temprana para reducir la cantidad de datos que necesitan ser procesados.
-- Transformaciones previas: Realiza transformaciones de datos antes de usarlos en la aplicación para evitar cálculos repetitivos.
-- **Uso de índices**: Crea índices en tus datos para acelerar las operaciones de búsqueda y filtrado.
+- Filtrado previo: Reduce el tamaño del conjunto de datos.
+- Transformación o agregación previa: Reduce el procesado en tiempo real.
+- Uso de índices: Acelerar las operaciones de búsqueda y filtrado.
 
-Personalmente, mi estrategia favorita. Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, data en streaming). Es, en esencia, *caching*.
+Personalmente, mi estrategia favorita. Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, streaming data). Es, en esencia, *caching*.
 
-### Bases de Datos
+## Bases de Datos
 
 - **Escalabilidad**: Las bases de datos pueden manejar grandes volúmenes de datos de manera eficiente.
 - **Consultas Rápidas**: Permiten realizar consultas complejas de manera rápida.
 - **Persistencia**: Los datos se almacenan de manera persistente, lo que permite su recuperación en cualquier momento.
-- Algunos ejemplos notables son SQLite, MySQL, PostgreSQL, DuckDB.
+
+Algunos ejemplos notables son SQLite, MySQL, PostgreSQL, DuckDB.
   
 
 ## Ejercicio 3 - Data
 
 Implementa una estrategia de optimización
 
-## Optimización - Shiny
+# Optimización - Shiny
+
+## Cuando una app arranca
+
+![](img/diagrama1.png)
+
+---
 
 Del lado de shiny, optimizar consiste básicamente en hacer que la app (en realidad, el procesador) haga el menor trabajo posible.
 
-### Controlar reactividad
+## Controlar reactividad
 
 1. bindEvent() - observeEvent() / eventReactive()
 
-### Estrategias de Caché
+## Estrategias de Caché
 
 1. bindCache()
 
@@ -183,7 +259,7 @@ Del lado de shiny, optimizar consiste básicamente en hacer que la app (en reali
    - Nivel aplicación: `cache = "app"`
    - Nivel sesión: `cache = "session"`
 
-### Comunicación servidor / navegador
+## Comunicación servidor / navegador
 
 - Reducir en tamaño y frecuencia lo que se manda al *cliente*.
 
@@ -192,9 +268,9 @@ Del lado de shiny, optimizar consiste básicamente en hacer que la app (en reali
 
 
 
-## Optimización - Async
+# Optimización - Async
 
-### Programación Asíncrona {.smaller}
+## Programación Asíncrona {.smaller}
 
 - Casos de uso:
   - Operaciones I/O (bases de datos, APIs)
@@ -206,4 +282,4 @@ Del lado de shiny, optimizar consiste básicamente en hacer que la app (en reali
 ## Ejercicio 5 - Async
 
 
-## Preguntas
+# Preguntas
