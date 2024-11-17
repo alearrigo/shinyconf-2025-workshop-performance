@@ -20,6 +20,10 @@ ui <- page_sidebar(
       max = 100,
       value = 100,
       step = 10
+    ),
+    actionButton(
+      inputId = "compute", 
+      label = "Calcular"
     )
   ),
   
@@ -50,25 +54,26 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
-  output$table <- renderTable({
+  filtered <- reactive({
     survey |> 
       filter(region == input$region) |> 
       filter(age <= input$age)
+  }) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  output$table <- renderTable({
+    filtered()
   })
   
   output$histogram <- renderPlot({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age) |> 
+    filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
       theme_light()
   })
   
   output$by_transport <- renderPlot({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age) |> 
+    filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
       facet_wrap(~transport) +
@@ -76,9 +81,7 @@ server <- function(input, output, session) {
   })
   
   output$by_type <- renderPlot({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age) |> 
+    filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
       facet_wrap(~type) +

@@ -401,11 +401,58 @@ server <- function(input, output, session) {
 }
 ```
 
+::: aside
 Usamos más de espacio (memoria) para reducir tiempo (CPU)
+:::
 
 ## Controlar reactividad
 
-1. bindEvent() - observeEvent() / eventReactive()
+Puedes encadenar `bindEvent()` a un `reactive()` u `observe()`.
+
+```{r}
+my_reactive <- reactive({
+  # slow reactive computation
+}) |> 
+  bindEvent(input$trigger)
+
+observe({
+  # slow reactive side effect
+}) |> 
+  bindEvent(input$trigger)
+```
+
+::: aside
+En versiones pasadas, esto se hacía con `observeEvent()` o `eventReactive()`.
+:::
+
+---
+
+```{r}
+#| code-line-numbers: "|5|16"
+ui <- page_sidebar(
+  sidebar = sidebar(
+    selectInput(inputId = "region", ...),
+    sliderInput(inputId = "age", ...),
+    actionButton(inputId = "compute", label = "Calcular")
+  ),
+  ...
+)
+
+server <- function(input, output, session) {
+  filtered <- reactive({
+    survey |> 
+      filter(region == input$region) |> 
+      filter(age <= input$age)
+  }) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+}
+```
+
+Ahora `filtered()` solo se actualizará cuando haya interacción con `input$compute`. 
+
+::: aside
+`ignoreNULL = FALSE` permite ejecutar el `reactive()` al iniciar la app.
+:::
 
 ## Estrategias de Caché
 
