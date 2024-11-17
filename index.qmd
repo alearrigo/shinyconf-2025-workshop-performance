@@ -11,6 +11,9 @@ format:
     footer: "LatinR: 2024-11-18"
 mermaid: 
   theme: default
+execute: 
+  eval: false
+  echo: true
 ---
 
 ## Estructura del Taller (3 horas)
@@ -117,13 +120,13 @@ Es una herramienta interactiva que proporciona una visualización detallada del 
 
 - Instalación:
 
-```r
+```{r}
 install.packages("profvis")
 ```
 
 - Uso básico:
 
-```r
+```{r}
 library(profvis)
 profvis({
 # Código a perfilar
@@ -136,7 +139,7 @@ Una herramienta que usa Javascript para calcular el tiempo que toman las accione
 
 Es super fácil de añadir a una app.
 
-```r
+```{r}
 tags$script(
     src = "https://cdn.jsdelivr.net/gh/Appsilon/shiny.tictoc@v0.2.0/shiny-tic-toc.min.js"
 )
@@ -285,7 +288,7 @@ Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, str
 
 ## Sin pre-procesamiento
 
-```r
+```{r}
 # app.R
 survey <- read.csv("data/survey.csv")
 
@@ -300,7 +303,7 @@ server <- function(input, output) {
 
 ## Con pre-procesamiento
 
-```r
+```{r}
 # script.R
 survey <- read.csv("data/survey.csv")
 regions <- unique(survey$region)
@@ -316,7 +319,7 @@ values <- regions |>
 saveRDS(values, "data/values.rds")
 ```
 
-```r
+```{r}
 # app.R
 values <- readRDS("data/values.rds")
 
@@ -349,6 +352,56 @@ Implementa una estrategia de optimización
 ---
 
 Del lado de shiny, optimizar consiste básicamente en hacer que la app (en realidad, el procesador) haga el menor trabajo posible.
+
+## Reducir reactividad
+
+```{r}
+#| code-line-numbers: "|3,4,5,9,10,11"
+server <- function(input, output, session) {
+  output$table <- renderTable({
+    survey |> 
+      filter(region == input$region) |> 
+      filter(age <= input$age)
+  })
+  
+  output$histogram <- renderPlot({
+    survey |> 
+      filter(region == input$region) |> 
+      filter(age <= input$age) |> 
+      ggplot(aes(temps_trajet_en_heures)) +
+      geom_histogram(bins = 20) +
+      theme_light()
+  })
+}
+```
+
+---
+
+`reactive()` al rescate
+
+```{r}
+#| code-line-numbers: "|2-6|9,13"
+server <- function(input, output, session) {
+  filtered <- reactive({
+    survey |> 
+      filter(region == input$region) |> 
+      filter(age <= input$age)
+  })
+  
+  output$table <- renderTable({
+    filtered()
+  })
+  
+  output$histogram <- renderPlot({
+    filtered() |> 
+      ggplot(aes(temps_trajet_en_heures)) +
+      geom_histogram(bins = 20) +
+      theme_light()
+  })
+}
+```
+
+Usamos más de espacio (memoria) para reducir tiempo (CPU)
 
 ## Controlar reactividad
 
