@@ -145,6 +145,13 @@ También puede accederse a la pestaña "Data".
 
 Esta indica cuánto tiempo y memoria se ha requerido por cada operación. Nos da un resumen de la medición.
 
+---
+
+Para una revisión más exhaustiva del uso de `{profvis}`, puedes consultar la documentación oficial:
+
+- Ejemplos: <https://profvis.r-lib.org/articles/rstudio.html>
+- Integración con RStudio: <https://profvis.r-lib.org/articles/rstudio.html>
+
 ## Ejercicio 2 - Profiling
 
 Interpreta los resultados
