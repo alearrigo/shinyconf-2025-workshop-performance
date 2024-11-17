@@ -23,6 +23,8 @@ ui <- page_sidebar(
     )
   ),
   
+  useBusyIndicators(),
+  
   card(
     max_height = "50%",
     tableOutput("table")
