@@ -13,9 +13,18 @@ mermaid:
   theme: default
 ---
 
-## Intro
+## Estructura del Taller (3 horas)
 
-- Quien soy
+- Introducción 
+- Ciclo de optimización: Ejercicio 1 - Benchmarking
+- Profiling: Ejercicio 2
+- Optimización - Data: Ejercicio 3
+- Optimización - Shiny: Ejercicio 4
+- Optimización - Async: Ejercicio 5
+- Temas avanzados
+- Preguntas
+
+# Introducción
 
 ## Appsilon
 
@@ -31,29 +40,52 @@ mermaid:
 
 Para ver más posiciones: <https://www.appsilon.com/careers>
 
-## Estructura del Taller (3 horas)
+## Quién soy
 
-- Introducción 
-- Ciclo de optimización: Ejercicio 1 - Benchmarking
-- Profiling: Ejercicio 2
-- Optimización - Data: Ejercicio 3
-- Optimización - Shiny: Ejercicio 4
-- Optimización - Async: Ejercicio 5
-- Temas avanzados
-- Preguntas
+- Politólogo y ahora R shiny developer
+- De Lima, Perú
+- Contacto:
+  - Web: <https://www.samuelenrique.com>
+  - Github: <https://github.com/calderonsamuel>
+  - Linkedin: <https://www.linkedin.com/in/samuelcalderon/>
+  
+## ¿Quiénes son ustedes?
 
-## Ciclo de Optimización:
+- Compartir en el chat:
+  - Nombre
+  - De dónde son y qué hora es en su ciudad
+  - Background profesional (brevísimo)
+  - 3 paquetes de R favoritos (si son de nicho, mejor)
 
-- Benchmarking: ¿Performa como esperamos?
-- Profilling: ¿Dónde están los cuellos de botella?
-- Estimación/Recomendación: ¿Qué puedo hacer?
-- Optimización: Hagámoslo
 
----
+# Ciclo de Optimización
+
+## Primero lo primero
+
+¿Qué es una computadora? La interacción de 3 componentes principales
+
+![](img/computer-core-elements.png)
+
+## ¿Qué es optimizar?
+
+![](img/computer-task-manager.png)
+
+¡Depende de la necesidad! 
+
+En general, pensemos en tiempo (CPU) o espacio (memory/storage). El dinero es un eje secreto.
+
+## El ciclo graficado
 
 ![](img/optimizacion-loop.png)
 
 <https://www.appsilon.com/post/optimize-shiny-app-performance>
+
+## A saber en cada etapa
+
+- Benchmarking: ¿Performa como esperamos?
+- Profilling: ¿Dónde están los cuellos de botella?
+- Estimación/Recomendación: ¿Qué puedo hacer?
+- Optimización: Tomar decisión e implementar
 
 ## Tipos de benchmarking 
 
@@ -110,6 +142,7 @@ tags$script(
 )
 ```
 
+- Si no saben añadir JS: [Packaging Javscript code for Shiny](https://shiny.posit.co/r/articles/build/packaging-javascript/)
 ---
 
 Ejecutar cualquiera de estas operaciones en la consola de Javascript. 
@@ -169,9 +202,10 @@ Para una revisión más exhaustiva del uso de `{profvis}`, puedes consultar la d
 
 ## Ejercicio 2 - Profiling
 
-Interpreta los resultados
-
-¿Cuáles son los puntos más críticos?
+- Interpreta los resultados
+  - ¿Cuáles son los puntos más críticos?
+  
+Toma en cuenta que estás probando esto para un solo usuario.
 
 ## Optimización - Data
 
@@ -240,11 +274,58 @@ suppressMessages(
 
 ## Pre-procesar cálculos
 
-- Filtrado previo: Reduce el tamaño del conjunto de datos.
-- Transformación o agregación previa: Reduce el procesado en tiempo real.
-- Uso de índices: Acelerar las operaciones de búsqueda y filtrado.
+- Filtrado previo: Menos tamaño
+- Transformación o agregación previa: Menos tiempo
+- Uso de índices: Búsqueda rápida
 
-Personalmente, mi estrategia favorita. Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, streaming data). Es, en esencia, *caching*.
+Es, en esencia, *caching*. Personalmente, mi estrategia favorita. 
+
+Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, streaming data), o la data no puede ser guardada en cualquier lugar (seguridad, privacidad). 
+
+
+## Sin pre-procesamiento
+
+```r
+# app.R
+survey <- read.csv("data/survey.csv")
+
+server <- function(input, output) {
+  output$table <- renderTable({
+      survey |> 
+        filter(region == input$region) |> 
+        summarise(avg_time = mean(temps_trajet_en_heures))
+    })
+}
+```
+
+## Con pre-procesamiento
+
+```r
+# script.R
+survey <- read.csv("data/survey.csv")
+regions <- unique(survey$region)
+
+values <- regions |> 
+  lapply(function(x) {
+    survey |> 
+        dplyr::filter(region == x) |> 
+        dplyr::summarise(avg_time = mean(temps_trajet_en_heures))
+  }) |> 
+  setNames(regions)
+
+saveRDS(values, "data/values.rds")
+```
+
+```r
+# app.R
+values <- readRDS("data/values.rds")
+
+server <- function(input, output) {
+  output$table <- renderTable(values[[input$region]])
+}
+```
+
+
 
 ## Bases de Datos
 
