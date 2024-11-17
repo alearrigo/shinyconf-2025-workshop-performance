@@ -2,7 +2,7 @@ library(shiny)
 library(bslib)
 library(tidyverse)
 
-survey <- read.csv("data/survey.csv") |> 
+survey <- arrow::read_parquet("data/survey.parquet") |> 
   slice_sample(n = 5000, by = region)  
 
 ui <- page_sidebar(
