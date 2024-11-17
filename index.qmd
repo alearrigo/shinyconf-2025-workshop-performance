@@ -45,9 +45,13 @@ Para ver más posiciones: <https://www.appsilon.com/careers>
 ## Ciclo de Optimización:
 
 - Benchmarking: ¿Performa como esperamos?
-- Profiling: ¿Dónde están los cuellos de botella?
+- Profilling: ¿Dónde están los cuellos de botella?
 - Estimación/Recomendación: ¿Qué puedo hacer?
 - Optimización: Hagámoslo
+
+---
+
+![](img/optimizacion-loop.png)
 
 ## Tipos de benchmarking 
 
