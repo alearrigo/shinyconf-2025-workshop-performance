@@ -2,7 +2,7 @@ library(shiny)
 library(bslib)
 library(tidyverse)
 
-survey <- readr::read_csv("data/survey.csv") |> 
+survey <- read.csv("data/survey.csv") |> 
   slice_sample(n = 5000, by = region)  
 
 ui <- page_sidebar(
