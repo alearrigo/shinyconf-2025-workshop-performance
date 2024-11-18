@@ -873,11 +873,39 @@ server <- function(input, output, session) {
 
 ## Ejercicio 5 - Async
 
+- Implementa async para uno de los gráficos
+- Discusión: ¿vale la pena?
+
 # Temas avanzados
 
-## ¿Dónde encuentro más información?
+## Representando la complejidad
+
+[Big O notation](https://www.freecodecamp.org/news/big-o-notation-why-it-matters-and-why-it-doesnt-1674cfa8a23c/)
+
+![](https://www.freecodecamp.org/news/content/images/2021/06/1_KfZYFUT2OKfjekJlCeYvuQ.jpeg)
 
 
+## Entendiendo la complejidad
+
+[Algoritmos y estructuras de datos](https://blog.algomaster.io/p/how-i-mastered-data-structures-and-algorithms)
+
+![](https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Feb93edef-9bb2-45f5-a0cd-fd44f23e44f0_1728x1046.png)
+
+## Enfrentando la complejidad
+
+- Modularización
+  - [shiny](https://mastering-shiny.org/scaling-modules.html)
+  - [box](https://github.com/klmr/box)
+- [Testing](https://mastering-shiny.org/scaling-testing.html)
+- File structure
+
+¡[`{rhino}`](https://appsilon.github.io/rhino/) tiene todo esto!
 
 
 # Preguntas
+
+# ¡Gracias!
+
+- Web: <https://www.samuelenrique.com>
+- Github: <https://github.com/calderonsamuel>
+- Linkedin: <https://www.linkedin.com/in/samuelcalderon/>
