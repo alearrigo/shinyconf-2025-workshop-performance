@@ -330,13 +330,17 @@ server <- function(input, output) {
 
 
 
-## Bases de Datos
+## Bases de Datos relacionales
 
 - **Escalabilidad**: Las bases de datos pueden manejar grandes volúmenes de datos de manera eficiente.
 - **Consultas Rápidas**: Permiten realizar consultas complejas de manera rápida.
 - **Persistencia**: Los datos se almacenan de manera persistente, lo que permite su recuperación en cualquier momento.
 
+---
+
 Algunos ejemplos notables son SQLite, MySQL, PostgreSQL, DuckDB.
+
+[freeCodeCamp](https://www.freecodecamp.org/learn/relational-database/) tiene un buen curso para principiantes.
   
 
 ## Ejercicio 3 - Data
@@ -456,16 +460,108 @@ Ahora `filtered()` solo se actualizará cuando haya interacción con `input$comp
 
 ## Estrategias de Caché
 
-1. bindCache()
+`bindCache()` nos permite guardar cómputos al vuelo en base a ciertas *keys*.
+
+```{r}
+#| code-line-numbers: "|7"
+server <- function(input, output, session) {
+  filtered <- reactive({
+    survey |> 
+      filter(region == input$region) |> 
+      filter(age <= input$age)
+  }) |> 
+    bindCache(input$region, input$age) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+}
+```
+
+Cuando una combinación vuelva a aparecer, se leerá el valor en lugar de recalcularlo. 
+
+::: aside
+`bindEvent()` no es obligatorio para usar `bindCache()`.
+:::
+
+---
 
 2. Niveles de caché:
-   - Nivel aplicación: `cache = "app"`
-   - Nivel sesión: `cache = "session"`
+  - Nivel aplicación: `cache = "app"` (default)
+  - Nivel sesión: `cache = "session"`
+  - Personalizado: `cache object + opciones`
+  
+```{r}
+bindCache(..., cache = "app")
+```
 
-## Comunicación servidor / navegador
+Por defecto, se usará un máximo de 200 Mb de caché.
+  
+::: aside
+Potencialmente mucho uso de memoria/storage, para reducir tiempo de procesamiento.
+:::
 
-- Reducir en tamaño y frecuencia lo que se manda al *cliente*.
+## Comunicación servidor - navegador
 
+- Enviar datos desde el servidor hacia el navegador toma tiempo. 
+  - Datos grandes -> mayor tiempo de envío.
+  - Conexión lenta -> mayor tiempo de envío
+- Igualmente, si los datos son grandes, al navegador le cuesta más leerlos y mostrarlos al usuario. 
+Puede que la PC del usuario sea una tostadora!
+
+---
+
+- ¿Qué hacer?
+  - Reducir frecuencia de envíos (`bindEvent()`)
+  - Reducir tamaño de envíos
+  - Mandar lo mismo pero en partes más pequeñas (server-side processing o streaming)
+  
+## Reducir tamaño de envíos
+
+Es posible delegar ciertos cálculos al navegador. Por ejemplo, renderizar un gráfico con [`{plotly}`](https://plotly.com/ggplot2/) en lugar de `{ggplot2}`.
+
+```{r}
+plotly::plotlyOutput() # en lugar de plotOutput
+plotly::renderPlotly() # en lugar de renderPlot
+```
+
+Con ello, se manda la "receta" del gráfico en lugar del gráfico mismo. Al recibir la receta, el navegador se encarga de renderizarla.
+
+---
+
+Estas funciones traducen sintaxis de `ggplot2` a sintaxis de `plotly.js` de manera bastante eficiente. Tiene soporte para muchos tipos de gráficos.
+
+![](img/shiny-plotly.png)
+
+Pero no te confíes, en muchos casos, el código va a necesitar retoques. Especialmente al usar extensiones de `ggplot2`.
+
+---
+
+Otros paquetes similares:
+
+- [ggiraph](https://davidgohel.github.io/ggiraph/)
+- [echarts4r](https://echarts4r.john-coene.com/)
+- [highcharter](https://jkunst.com/highcharter/)
+- [r2d3](https://rstudio.github.io/r2d3/)
+- [shiny.gosling](https://appsilon.github.io/shiny.gosling/index.html) (genomics, by Appsilon)
+
+## Server-side processing
+
+En el caso de las tablas, el server-side processing permite paginar el resultado y enviar al navegador solo la página que está siendo mostrada en el momento.
+
+El paquete `{DT}` es una opción solida.
+
+```{r}
+DT::DTOutput() # en lugar de tableOutput()
+DT::renderDT() # en lugar de renderTable()
+```
+
+::: aside
+Si ya usabas `{DT}`, ¿sabías que hacía esto por defecto?
+:::
+
+---
+
+Otra opcion:
+
+- `{reactable}` en conjunto con `{reactable.extras}` (by Appsilon).
 
 ## Ejercicio 4 - Shiny
 

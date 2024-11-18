@@ -2,8 +2,7 @@ library(shiny)
 library(bslib)
 library(tidyverse)
 
-survey <- arrow::read_parquet("data/survey.parquet") |> 
-  slice_sample(n = 5000, by = region)  
+survey <- arrow::read_parquet("data/survey.parquet")
 
 ui <- page_sidebar(
   
@@ -31,22 +30,22 @@ ui <- page_sidebar(
   
   card(
     max_height = "50%",
-    tableOutput("table")
+    DT::DTOutput("table")
   ),
   
   layout_columns(
     col_widths = c(4, 4, 4),
     
     card(
-      plotOutput("histogram")
+      plotly::plotlyOutput("histogram")
     ),
     card(
       full_screen = TRUE,
-      plotOutput("by_transport")
+      plotly::plotlyOutput("by_transport")
     ),
     card(
       full_screen = TRUE,
-      plotOutput("by_type")
+      plotly::plotlyOutput("by_type")
     )
     
   )
@@ -59,20 +58,21 @@ server <- function(input, output, session) {
       filter(region == input$region) |> 
       filter(age <= input$age)
   }) |> 
+    bindCache(input$region, input$age) |> 
     bindEvent(input$compute, ignoreNULL = FALSE)
   
-  output$table <- renderTable({
+  output$table <- DT::renderDT({
     filtered()
   })
   
-  output$histogram <- renderPlot({
+  output$histogram <- plotly::renderPlotly({
     filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
       theme_light()
   })
   
-  output$by_transport <- renderPlot({
+  output$by_transport <- plotly::renderPlotly({
     filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
@@ -80,7 +80,7 @@ server <- function(input, output, session) {
       theme_light()
   })
   
-  output$by_type <- renderPlot({
+  output$by_type <- plotly::renderPlotly({
     filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
