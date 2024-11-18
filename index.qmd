@@ -876,6 +876,16 @@ server <- function(input, output, session) {
 - Implementa async para uno de los gráficos
 - Discusión: ¿vale la pena?
 
+## Todo junto
+
+Acá se desplegó la app con todas las mejoras vistas en los ejercicios. Además, `survey` utiliza la data completa, en lugar de una muestra por región.
+
+Enlace: <https://01933e23-3162-29f7-ec09-ce351b4b4615.share.connect.posit.cloud/->
+
+::: aside
+La plataforma permitió 8 GB de RAM y 2 núcleos de CPU.
+:::
+
 # Temas avanzados
 
 ## Representando la complejidad
