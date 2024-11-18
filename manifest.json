@@ -204,6 +204,46 @@
         "RemoteSha": "1.0.13"
       }
     },
+    "arrow": {
+      "Source": "P3M",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "arrow",
+        "Title": "Integration to 'Apache' 'Arrow'",
+        "Version": "17.0.0.1",
+        "Authors@R": "c(\n    person(\"Neal\", \"Richardson\", email = \"neal.p.richardson@gmail.com\", role = c(\"aut\")),\n    person(\"Ian\", \"Cook\", email = \"ianmcook@gmail.com\", role = c(\"aut\")),\n    person(\"Nic\", \"Crane\", email = \"thisisnic@gmail.com\", role = c(\"aut\")),\n    person(\"Dewey\", \"Dunnington\", role = c(\"aut\"), email = \"dewey@fishandwhistle.net\", comment = c(ORCID = \"0000-0002-9415-4582\")),\n    person(\"Romain\", \"Fran\\u00e7ois\", role = c(\"aut\"), comment = c(ORCID = \"0000-0002-2444-4226\")),\n    person(\"Jonathan\", \"Keane\", email = \"jkeane@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Drago\\u0219\", \"Moldovan-Gr\\u00fcnfeld\", email = \"dragos.mold@gmail.com\", role = c(\"aut\")),\n    person(\"Jeroen\", \"Ooms\", email = \"jeroen@berkeley.edu\", role = c(\"aut\")),\n    person(\"Jacob\", \"Wujciak-Jens\", email = \"jacob@wujciak.de\", role = c(\"aut\")),\n    person(\"Javier\", \"Luraschi\", email = \"javier@rstudio.com\", role = c(\"ctb\")),\n    person(\"Karl\", \"Dunkle Werner\", email = \"karldw@users.noreply.github.com\", role = c(\"ctb\"), comment = c(ORCID = \"0000-0003-0523-7309\")),\n    person(\"Jeffrey\", \"Wong\", email = \"jeffreyw@netflix.com\", role = c(\"ctb\")),\n    person(\"Apache Arrow\", email = \"dev@arrow.apache.org\", role = c(\"aut\", \"cph\"))\n  )",
+        "Description": "'Apache' 'Arrow' <https://arrow.apache.org/> is a cross-language\n    development platform for in-memory data. It specifies a standardized\n    language-independent columnar memory format for flat and hierarchical data,\n    organized for efficient analytic operations on modern hardware. This\n    package provides an interface to the 'Arrow C++' library.",
+        "Depends": "R (>= 4.0)",
+        "License": "Apache License (>= 2.0)",
+        "URL": "https://github.com/apache/arrow/, https://arrow.apache.org/docs/r/",
+        "BugReports": "https://github.com/apache/arrow/issues",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "SystemRequirements": "C++17; for AWS S3 support on Linux, libcurl and\nopenssl (optional); cmake >= 3.16 (build-time only, and only\nfor full source build)",
+        "Biarch": "true",
+        "Imports": "assertthat, bit64 (>= 0.9-7), glue, methods, purrr, R6, rlang\n(>= 1.0.0), stats, tidyselect (>= 1.0.0), utils, vctrs",
+        "RoxygenNote": "7.3.1",
+        "Config/testthat/edition": "3",
+        "Config/build/bootstrap": "TRUE",
+        "Suggests": "blob, curl, cli, DBI, dbplyr, decor, distro, dplyr, duckdb\n(>= 0.2.8), hms, jsonlite, knitr, lubridate, pillar, pkgload,\nreticulate, rmarkdown, stringi, stringr, sys, testthat (>=\n3.1.0), tibble, tzdb, withr",
+        "LinkingTo": "cpp11 (>= 0.4.2)",
+        "Collate": "'arrowExports.R' 'enums.R' 'arrow-object.R' 'type.R'\n'array-data.R' 'arrow-datum.R' 'array.R' 'arrow-info.R'\n'arrow-package.R' 'arrow-tabular.R' 'buffer.R'\n'chunked-array.R' 'io.R' 'compression.R' 'scalar.R' 'compute.R'\n'config.R' 'csv.R' 'dataset.R' 'dataset-factory.R'\n'dataset-format.R' 'dataset-partition.R' 'dataset-scan.R'\n'dataset-write.R' 'dictionary.R' 'dplyr-across.R'\n'dplyr-arrange.R' 'dplyr-by.R' 'dplyr-collect.R'\n'dplyr-count.R' 'dplyr-datetime-helpers.R' 'dplyr-distinct.R'\n'dplyr-eval.R' 'dplyr-filter.R' 'dplyr-funcs-agg.R'\n'dplyr-funcs-augmented.R' 'dplyr-funcs-conditional.R'\n'dplyr-funcs-datetime.R' 'dplyr-funcs-doc.R'\n'dplyr-funcs-math.R' 'dplyr-funcs-simple.R'\n'dplyr-funcs-string.R' 'dplyr-funcs-type.R' 'expression.R'\n'dplyr-funcs.R' 'dplyr-glimpse.R' 'dplyr-group-by.R'\n'dplyr-join.R' 'dplyr-mutate.R' 'dplyr-select.R'\n'dplyr-slice.R' 'dplyr-summarize.R' 'dplyr-union.R'\n'record-batch.R' 'table.R' 'dplyr.R' 'duckdb.R' 'extension.R'\n'feather.R' 'field.R' 'filesystem.R' 'flight.R'\n'install-arrow.R' 'ipc-stream.R' 'json.R' 'memory-pool.R'\n'message.R' 'metadata.R' 'parquet.R' 'python.R'\n'query-engine.R' 'record-batch-reader.R'\n'record-batch-writer.R' 'reexports-bit64.R'\n'reexports-tidyselect.R' 'schema.R' 'udf.R' 'util.R'",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-08-18 21:45:07 UTC; jkeane",
+        "Author": "Neal Richardson [aut],\n  Ian Cook [aut],\n  Nic Crane [aut],\n  Dewey Dunnington [aut] (<https://orcid.org/0000-0002-9415-4582>),\n  Romain François [aut] (<https://orcid.org/0000-0002-2444-4226>),\n  Jonathan Keane [aut, cre],\n  Dragoș Moldovan-Grünfeld [aut],\n  Jeroen Ooms [aut],\n  Jacob Wujciak-Jens [aut],\n  Javier Luraschi [ctb],\n  Karl Dunkle Werner [ctb] (<https://orcid.org/0000-0003-0523-7309>),\n  Jeffrey Wong [ctb],\n  Apache Arrow [aut, cph]",
+        "Maintainer": "Jonathan Keane <jkeane@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2024-08-21 12:20:06 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-08-28 05:16:01 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "arrow",
+        "RemoteRef": "arrow",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteSha": "17.0.0.1"
+      }
+    },
     "askpass": {
       "Source": "P3M",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -236,6 +276,36 @@
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
         "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
         "RemoteSha": "1.2.0"
+      }
+    },
+    "assertthat": {
+      "Source": "P3M",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "assertthat",
+        "Title": "Easy Pre and Post Assertions",
+        "Version": "0.2.1",
+        "Authors@R": "\n  person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", c(\"aut\", \"cre\"))",
+        "Description": "An extension to stopifnot() that makes it easy to declare \n    the pre and post conditions that you code should satisfy, while also \n    producing friendly error messages so that your users know what's gone\n    wrong.",
+        "License": "GPL-3",
+        "Imports": "tools",
+        "Suggests": "testthat, covr",
+        "RoxygenNote": "6.0.1",
+        "Collate": "'assert-that.r' 'on-failure.r' 'assertions-file.r'\n'assertions-scalar.R' 'assertions.r' 'base.r'\n'base-comparison.r' 'base-is.r' 'base-logical.r' 'base-misc.r'\n'utils.r' 'validate-that.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-03-21 13:11:01 UTC; hadley",
+        "Author": "Hadley Wickham [aut, cre]",
+        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2019-03-21 14:53:46 UTC",
+        "Encoding": "UTF-8",
+        "Built": "R 4.4.0; ; 2024-04-25 19:54:15 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "assertthat",
+        "RemoteRef": "assertthat",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteSha": "0.2.1"
       }
     },
     "backports": {
@@ -1685,6 +1755,40 @@
         "RemoteSha": "0.5.8.1"
       }
     },
+    "htmlwidgets": {
+      "Source": "P3M",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Type": "Package",
+        "Package": "htmlwidgets",
+        "Title": "HTML Widgets for R",
+        "Version": "1.6.4",
+        "Authors@R": "c(\n    person(\"Ramnath\", \"Vaidyanathan\", role = c(\"aut\", \"cph\")),\n    person(\"Yihui\", \"Xie\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", role = \"aut\"),\n    person(\"Joe\", \"Cheng\", , \"joe@posit.co\", role = \"aut\"),\n    person(\"Carson\", \"Sievert\", , \"carson@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Kenton\", \"Russell\", role = c(\"aut\", \"cph\")),\n    person(\"Ellis\", \"Hughes\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "A framework for creating HTML widgets that render in various\n    contexts including the R console, 'R Markdown' documents, and 'Shiny'\n    web applications.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/ramnathv/htmlwidgets",
+        "BugReports": "https://github.com/ramnathv/htmlwidgets/issues",
+        "Imports": "grDevices, htmltools (>= 0.5.7), jsonlite (>= 0.9.16), knitr\n(>= 1.8), rmarkdown, yaml",
+        "Suggests": "testthat",
+        "Enhances": "shiny (>= 1.1)",
+        "VignetteBuilder": "knitr",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-12-06 00:11:16 UTC; cpsievert",
+        "Author": "Ramnath Vaidyanathan [aut, cph],\n  Yihui Xie [aut],\n  JJ Allaire [aut],\n  Joe Cheng [aut],\n  Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),\n  Kenton Russell [aut, cph],\n  Ellis Hughes [ctb],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Carson Sievert <carson@posit.co>",
+        "Repository": "RSPM",
+        "Date/Publication": "2023-12-06 06:00:06 UTC",
+        "Built": "R 4.4.0; ; 2024-04-25 23:02:02 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "htmlwidgets",
+        "RemoteRef": "htmlwidgets",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteSha": "1.6.4"
+      }
+    },
     "httpuv": {
       "Source": "P3M",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2515,6 +2619,42 @@
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
         "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
         "RemoteSha": "3.8.4"
+      }
+    },
+    "profvis": {
+      "Source": "P3M",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "profvis",
+        "Title": "Interactive Visualizations for Profiling R Code",
+        "Version": "0.4.0",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Winston\", \"Chang\", role = \"aut\"),\n    person(\"Javier\", \"Luraschi\", role = \"aut\"),\n    person(\"Timothy\", \"Mastny\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(, \"jQuery Foundation\", role = \"cph\",\n           comment = \"jQuery library\"),\n    person(, \"jQuery contributors\", role = c(\"ctb\", \"cph\"),\n           comment = \"jQuery library; authors listed in inst/htmlwidgets/lib/jquery/AUTHORS.txt\"),\n    person(\"Mike\", \"Bostock\", role = c(\"ctb\", \"cph\"),\n           comment = \"D3 library\"),\n    person(, \"D3 contributors\", role = \"ctb\",\n           comment = \"D3 library\"),\n    person(\"Ivan\", \"Sagalaev\", role = c(\"ctb\", \"cph\"),\n           comment = \"highlight.js library\")\n  )",
+        "Description": "Interactive visualizations for profiling R code.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://profvis.r-lib.org, https://github.com/r-lib/profvis",
+        "BugReports": "https://github.com/r-lib/profvis/issues",
+        "Depends": "R (>= 4.0)",
+        "Imports": "htmlwidgets (>= 0.3.2), rlang (>= 1.1.0), vctrs",
+        "Suggests": "htmltools, knitr, rmarkdown, shiny, testthat (>= 3.0.0)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate, rmarkdown",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-09-19 19:26:06 UTC; hadleywickham",
+        "Author": "Hadley Wickham [aut, cre],\n  Winston Chang [aut],\n  Javier Luraschi [aut],\n  Timothy Mastny [aut],\n  Posit Software, PBC [cph, fnd],\n  jQuery Foundation [cph] (jQuery library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/htmlwidgets/lib/jquery/AUTHORS.txt),\n  Mike Bostock [ctb, cph] (D3 library),\n  D3 contributors [ctb] (D3 library),\n  Ivan Sagalaev [ctb, cph] (highlight.js library)",
+        "Maintainer": "Hadley Wickham <hadley@posit.co>",
+        "Repository": "RSPM",
+        "Date/Publication": "2024-09-20 11:50:10 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-09-21 05:01:10 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "profvis",
+        "RemoteRef": "profvis",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteSha": "0.4.0"
       }
     },
     "progress": {
@@ -4008,11 +4148,371 @@
     ".github/workflows/publish.yml": {
       "checksum": "3a5acefb714dcd0bc2207ba064bc20aa"
     },
+    "_freeze/index/execute-results/html.json": {
+      "checksum": "3e62b2666b75decdedb71be7bd8652cc"
+    },
+    "_freeze/index/libs/clipboard/clipboard.min.js": {
+      "checksum": "15f52a1ee547f2bdd46e56747332ca2d"
+    },
+    "_freeze/index/libs/quarto-diagram/mermaid-init.js": {
+      "checksum": "0eb10962181f40af4621777eeb053309"
+    },
+    "_freeze/index/libs/quarto-diagram/mermaid.css": {
+      "checksum": "0aeecd8a816e25e43a41943c6146c2b7"
+    },
+    "_freeze/index/libs/quarto-diagram/mermaid.min.js": {
+      "checksum": "2c3bab09d559ac845c4815907005ddea"
+    },
+    "_freeze/index/libs/quarto-html/light-border.css": {
+      "checksum": "0b646459f2ef479b718a65b2157c44e4"
+    },
+    "_freeze/index/libs/quarto-html/popper.min.js": {
+      "checksum": "3a4a291ccf3f1ea0f82b641542fd3827"
+    },
+    "_freeze/index/libs/quarto-html/quarto-html.min.css": {
+      "checksum": "68b329da9893e34099c7d8ad5cb9c940"
+    },
+    "_freeze/index/libs/quarto-html/quarto-syntax-highlighting.css": {
+      "checksum": "ab2b9e94a89b131e869fd951d6355545"
+    },
+    "_freeze/index/libs/quarto-html/tabby.min.js": {
+      "checksum": "c4219bb6375131a945d7e4bfc49c5f35"
+    },
+    "_freeze/index/libs/quarto-html/tippy.css": {
+      "checksum": "ebd6f8ce46a677e1a4f5f8a8317109a9"
+    },
+    "_freeze/index/libs/quarto-html/tippy.umd.min.js": {
+      "checksum": "d828775275749701b48bd9d958814111"
+    },
+    "_freeze/index/libs/revealjs/dist/reset.css": {
+      "checksum": "4042c1a43777d540673cabc97cec67b2"
+    },
+    "_freeze/index/libs/revealjs/dist/reveal.css": {
+      "checksum": "b8181fffa0a3e6754be1fa355f7532b3"
+    },
+    "_freeze/index/libs/revealjs/dist/reveal.esm.js": {
+      "checksum": "820aa60cc9bfdee16a52b87fa56f782c"
+    },
+    "_freeze/index/libs/revealjs/dist/reveal.esm.js.map": {
+      "checksum": "e34e6f40268baa4bbaf5381322b0dc35"
+    },
+    "_freeze/index/libs/revealjs/dist/reveal.js": {
+      "checksum": "48b5fa2ff068f5e48b1be50a0fa166e9"
+    },
+    "_freeze/index/libs/revealjs/dist/reveal.js.map": {
+      "checksum": "b898d2d44f77fb1492a9be733a5d3c5b"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/league-gothic/league-gothic.css": {
+      "checksum": "488966d15e97f072801d7e348f4b5141"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/league-gothic/league-gothic.eot": {
+      "checksum": "9900a4643cc63c5d8f969d2196f72572"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/league-gothic/league-gothic.ttf": {
+      "checksum": "91295fa87df918411b49b7531da5d558"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/league-gothic/league-gothic.woff": {
+      "checksum": "cd382dc8a9d6317864b5810a320effc5"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/league-gothic/LICENSE": {
+      "checksum": "8fac5842e2f5a2e6bc067f5beb5035c9"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/LICENSE": {
+      "checksum": "8ea3e41b02e9f465515dad7c89459c5b"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-italic.eot": {
+      "checksum": "72217712eb8d28872e7069322f3fda23"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-italic.ttf": {
+      "checksum": "8256cfd7e4017a7690814879409212cd"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-italic.woff": {
+      "checksum": "e74f0128884561828ce8c9cf5c284ab8"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-regular.eot": {
+      "checksum": "1d71438462d532b62b05cdd7e6d7197d"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-regular.ttf": {
+      "checksum": "2da39ecf9246383937da11b44b7bd9b4"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-regular.woff": {
+      "checksum": "e7acc589bb558fe58936a853f570193c"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-semibold.eot": {
+      "checksum": "0f3da1edf1b5c6a94a6ad948a7664451"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-semibold.ttf": {
+      "checksum": "f3565095e6c9158140444970f5a2c5ed"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-semibold.woff": {
+      "checksum": "1cb8e94f1185f1131a0c895165998f2b"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-semibolditalic.eot": {
+      "checksum": "58153ac7194e141d1e73ea88c6b63861"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-semibolditalic.ttf": {
+      "checksum": "c7e698a4d0956f4a939f42a05685bbf5"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro-semibolditalic.woff": {
+      "checksum": "6b058fc2634b01d837c3432316c3141f"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/fonts/source-sans-pro/source-sans-pro.css": {
+      "checksum": "b4b58710f05264a4011912211d0a9eed"
+    },
+    "_freeze/index/libs/revealjs/dist/theme/quarto.css": {
+      "checksum": "8aef6e638e8b979b6bd15fc6b495f5a9"
+    },
+    "_freeze/index/libs/revealjs/plugin/highlight/highlight.esm.js": {
+      "checksum": "5abbd1f8ee249ae0d6c80408d2081dbb"
+    },
+    "_freeze/index/libs/revealjs/plugin/highlight/highlight.js": {
+      "checksum": "e42092622b9ca4e1de619e58c9aa5335"
+    },
+    "_freeze/index/libs/revealjs/plugin/highlight/monokai.css": {
+      "checksum": "8c43a819e1268fc57605f500adff816b"
+    },
+    "_freeze/index/libs/revealjs/plugin/highlight/plugin.js": {
+      "checksum": "e50d6f6f20e1469edffd935d2cce0288"
+    },
+    "_freeze/index/libs/revealjs/plugin/highlight/zenburn.css": {
+      "checksum": "28d5b9497037a12cb5a15644fea2f1c3"
+    },
+    "_freeze/index/libs/revealjs/plugin/markdown/markdown.esm.js": {
+      "checksum": "680040ad1bdd81925b8540ee31f8f00b"
+    },
+    "_freeze/index/libs/revealjs/plugin/markdown/markdown.js": {
+      "checksum": "1c65f0419784a4f6efb66077b73f6171"
+    },
+    "_freeze/index/libs/revealjs/plugin/markdown/plugin.js": {
+      "checksum": "472e5a4bf0e0ddf7e03616675ceaccf0"
+    },
+    "_freeze/index/libs/revealjs/plugin/math/katex.js": {
+      "checksum": "2a22abd1eb5a1c923f2d41178427715a"
+    },
+    "_freeze/index/libs/revealjs/plugin/math/math.esm.js": {
+      "checksum": "2362e49689e5b8b1ad56421519f04b9f"
+    },
+    "_freeze/index/libs/revealjs/plugin/math/math.js": {
+      "checksum": "d505146667f3a21cad572818229d7578"
+    },
+    "_freeze/index/libs/revealjs/plugin/math/mathjax2.js": {
+      "checksum": "c1ea64afa05c3677d2c404755193b2be"
+    },
+    "_freeze/index/libs/revealjs/plugin/math/mathjax3.js": {
+      "checksum": "faf5422ce0f2c9be5eec33164bed8031"
+    },
+    "_freeze/index/libs/revealjs/plugin/math/plugin.js": {
+      "checksum": "ec9cb99b85a8026d24b26526f6effe0d"
+    },
+    "_freeze/index/libs/revealjs/plugin/notes/notes.esm.js": {
+      "checksum": "5521f88f0a2793da2523a93342cc5881"
+    },
+    "_freeze/index/libs/revealjs/plugin/notes/notes.js": {
+      "checksum": "1843550642852655b8dc0f639b2d7b2f"
+    },
+    "_freeze/index/libs/revealjs/plugin/notes/plugin.js": {
+      "checksum": "701c19b5c0bec23297d19d9fec682c29"
+    },
+    "_freeze/index/libs/revealjs/plugin/notes/speaker-view.html": {
+      "checksum": "fd6bbea4e158ee48ec77bbc44a162078"
+    },
+    "_freeze/index/libs/revealjs/plugin/pdf-export/pdfexport.js": {
+      "checksum": "877fade43edbda847ff6fc722b6be5f6"
+    },
+    "_freeze/index/libs/revealjs/plugin/pdf-export/plugin.yml": {
+      "checksum": "76add7202812cd14a48ca57b96777de4"
+    },
+    "_freeze/index/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css": {
+      "checksum": "4ba6b644b711bc2fc89389d78209da6d"
+    },
+    "_freeze/index/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js": {
+      "checksum": "2a5d4d07fe940a2a0d78aced7b94ab36"
+    },
+    "_freeze/index/libs/revealjs/plugin/quarto-line-highlight/plugin.yml": {
+      "checksum": "4af9468c1cc516c6b54c12e686ba708f"
+    },
+    "_freeze/index/libs/revealjs/plugin/quarto-support/footer.css": {
+      "checksum": "b756f7eedcfd9b82421dd144f0ef7578"
+    },
+    "_freeze/index/libs/revealjs/plugin/quarto-support/plugin.yml": {
+      "checksum": "4f79b4a104bed30cd5b7b49d598bed88"
+    },
+    "_freeze/index/libs/revealjs/plugin/quarto-support/support.js": {
+      "checksum": "b6aa412b14fbe4c3352b98dea9b8c2d2"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css": {
+      "checksum": "826c57385f3d35cfed5478ba7b1f5c03"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/brands.css": {
+      "checksum": "a3ceb4f1b808969cd8f1bb0aac1510c2"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/fontawesome.css": {
+      "checksum": "dbcb133434de9fcab3b59ade7ec21498"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/regular.css": {
+      "checksum": "fee1728359ce4620fd348a3e54507aa2"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/solid.css": {
+      "checksum": "29836be7445cd9786959237ea8e13405"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/svg-with-js.css": {
+      "checksum": "bd066123cdf3337103b21713df9bfd01"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/v4-shims.css": {
+      "checksum": "6dd334cc89ff203f10b026482960997d"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/v4-shims.min.css": {
+      "checksum": "7254c92168d4717ed7b36234b2bba3b8"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/LICENSE.txt": {
+      "checksum": "626db860f543d02f2f8d8599aac4fbc0"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-brands-400.eot": {
+      "checksum": "e2a76403183eff8967cf6318c6e51509"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-brands-400.svg": {
+      "checksum": "a999c7b8823b901248833dc7fe07a52f"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-brands-400.ttf": {
+      "checksum": "e0fc4e5c719b4dc10c97fc111d7374e1"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-brands-400.woff": {
+      "checksum": "d034c1b2ee84dd981ef2e637754a0b4f"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-brands-400.woff2": {
+      "checksum": "f319eac1c755f9929fd856720ce1695e"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-regular-400.eot": {
+      "checksum": "5a4618f029618cc2795c05fe53d57028"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-regular-400.svg": {
+      "checksum": "e9d8dbb0c3e9b97ffc59c50ff5d01422"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-regular-400.ttf": {
+      "checksum": "6534c603e0892488132ad57248ec69e2"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-regular-400.woff": {
+      "checksum": "e99569d3d10c94c60d9a68523c1c0e71"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-regular-400.woff2": {
+      "checksum": "a3715c6fe264a51f1d9260b447ff46bc"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-solid-900.eot": {
+      "checksum": "d9824d00712532d7697df68df16ae0d3"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-solid-900.svg": {
+      "checksum": "666a82cb3e9f8591bef4049aea26c4c6"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-solid-900.ttf": {
+      "checksum": "00ddaede094b83270cadbfc1a907e8ca"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-solid-900.woff": {
+      "checksum": "128d2b0be23925e5cf36717ddc6f093b"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/font-awesome/webfonts/fa-solid-900.woff2": {
+      "checksum": "18d2347ab2a9f40ca2247cdb03303d84"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/blackboard.png": {
+      "checksum": "6fb19d93b5ab5f0b7aca4b1e130b8e36"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/boardmarker-black.png": {
+      "checksum": "ffdd43056d3b6aeb79b5ab2c9fdffbb5"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/boardmarker-blue.png": {
+      "checksum": "9c51726f1aba58b3ea58c7e6f3a1eb69"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/boardmarker-green.png": {
+      "checksum": "b2174dfab385d64b82d472fe6bf8732c"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/boardmarker-orange.png": {
+      "checksum": "5bd94666605a7c19b66e821dcfcd6e81"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/boardmarker-purple.png": {
+      "checksum": "d82f80fb45a6c2796fed58d794b1dbcc"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/boardmarker-red.png": {
+      "checksum": "4e003969a8898bda1034fdc83c6775a8"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/boardmarker-yellow.png": {
+      "checksum": "c51cd745582a05d5a4a274396f9e1f64"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/chalk-blue.png": {
+      "checksum": "20fcdd8b7a051b6d2bcbe5223ca8f93a"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/chalk-green.png": {
+      "checksum": "6a99931b528659ae783fdba973ebee2d"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/chalk-orange.png": {
+      "checksum": "1e673a9b3ba41c3817a7791537e687cb"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/chalk-purple.png": {
+      "checksum": "b3a6bbfd32d883879f6f52348c71d997"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/chalk-red.png": {
+      "checksum": "5be9fc1fca1db55857f70f1bdb92477a"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/chalk-white.png": {
+      "checksum": "e6911337608cb3b270cf2faba186dfca"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/chalk-yellow.png": {
+      "checksum": "d5ce34338bd385c8baa40920eab65e18"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/sponge.png": {
+      "checksum": "6877bfebc4e000eb7f429ca7cca24969"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/img/whiteboard.png": {
+      "checksum": "f92eafcef815acaed323435b65469684"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/plugin.js": {
+      "checksum": "bd8665b9f31e8bdb4b6ab896c12eb5c7"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/plugin.yml": {
+      "checksum": "a42805b0271e44d994c2c7a1dbb33646"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/README.md": {
+      "checksum": "bcb6f0f209ce0b0f4c464fc1e45fadce"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-chalkboard/style.css": {
+      "checksum": "6bdeacb96f8b18c0046039c8de10c51b"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-menu/menu.css": {
+      "checksum": "1b9988f08dfe354c44e134304b3df8af"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-menu/menu.js": {
+      "checksum": "8db4f7eb4ad5670e6be4bdf83c389ca2"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-menu/plugin.yml": {
+      "checksum": "b949d3d3d5bdf5b5f508e6bfb328798e"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-menu/quarto-menu.css": {
+      "checksum": "c8715037656f6595dbc3d9145fc7d8ac"
+    },
+    "_freeze/index/libs/revealjs/plugin/reveal-menu/quarto-menu.js": {
+      "checksum": "f911441bee5a8cd7635fe683fec20cdd"
+    },
+    "_freeze/index/libs/revealjs/plugin/search/plugin.js": {
+      "checksum": "032f7408cd38991c3bd861582dd6322d"
+    },
+    "_freeze/index/libs/revealjs/plugin/search/search.esm.js": {
+      "checksum": "5a4865036188db6309eec77fb9b9fd41"
+    },
+    "_freeze/index/libs/revealjs/plugin/search/search.js": {
+      "checksum": "1d91bc7e321fae581fb65f502ef4ecd0"
+    },
+    "_freeze/index/libs/revealjs/plugin/zoom/plugin.js": {
+      "checksum": "75d50a8cac0d19f0824a1c5876d36673"
+    },
+    "_freeze/index/libs/revealjs/plugin/zoom/zoom.esm.js": {
+      "checksum": "b425222ed9d03cad024acb201af632ec"
+    },
+    "_freeze/index/libs/revealjs/plugin/zoom/zoom.js": {
+      "checksum": "dbab999c1a2fe1f31046733759dd1e2b"
+    },
     "_quarto.yml": {
       "checksum": "03c1e5684b93431ac31adf19839c13d5"
     },
     "app.R": {
-      "checksum": "0261b9cff1e2ce236da4d09b3495d52b"
+      "checksum": "ee0c8715960241b1ab64ae9134c68ca2"
     },
     "data/survey.csv": {
       "checksum": "00b37548dc22edb6a68b93e1f2ca5343"
@@ -4027,13 +4527,22 @@
       "checksum": "857257eee3a66f19f69c2c3a1411cfb8"
     },
     "diagramas.pptx": {
-      "checksum": "1b351f51b1bfcba218eaf86a3f963caf"
+      "checksum": "5f832ae4de580ce84ac65f8415f18385"
     },
     "img/appsilon-web.png": {
       "checksum": "4b77b0774193a2b3819bc6bad696b2ac"
     },
     "img/Appsilon_logo.svg": {
       "checksum": "1cf6923c53c0c3e042136482b32e20b8"
+    },
+    "img/benchmark-exercise.png": {
+      "checksum": "c7f34bc7e4b0fe440cefd60fdeac3549"
+    },
+    "img/computer-core-elements.png": {
+      "checksum": "f40281c2cbe6068d41aac825f932941f"
+    },
+    "img/computer-task-manager.png": {
+      "checksum": "a61cb8c48f324ad421155bf0ca38f44e"
     },
     "img/diagrama1.png": {
       "checksum": "10bece64587f494abaa4c06e92f7dfb4"
@@ -4054,10 +4563,10 @@
       "checksum": "9da817671090a933edb5d66d969f4b4b"
     },
     "index.html": {
-      "checksum": "9c12cfaa8f75f40a81666b7335ed9ac2"
+      "checksum": "e09d2b8a1f64e5358df8ca68ddb52c01"
     },
     "index.qmd": {
-      "checksum": "25c6625c481f4803de005951e601c90e"
+      "checksum": "e9976303faf62ed900db39bf3ddd4077"
     },
     "index_files/libs/clipboard/clipboard.min.js": {
       "checksum": "15f52a1ee547f2bdd46e56747332ca2d"
@@ -4417,10 +4926,10 @@
       "checksum": "dbab999c1a2fe1f31046733759dd1e2b"
     },
     "README.md": {
-      "checksum": "889053d4150869b56273bcf7ae51af52"
+      "checksum": "031f5100905b7b12a260360c4b8973f7"
     },
     "scripts/01_setup.R": {
-      "checksum": "3c1167d4d24a3187eefba18abaf5fdc1"
+      "checksum": "787a6cd5d8d1f20c3763397efacc3b8e"
     }
   },
   "users": null
