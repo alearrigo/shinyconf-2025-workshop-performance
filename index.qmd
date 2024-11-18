@@ -16,6 +16,10 @@ execute:
   echo: true
 ---
 
+## Material
+
+<https://github.com/Appsilon/latin-r-2024>
+
 ## Estructura del Taller (3 horas)
 
 - Introducción 
