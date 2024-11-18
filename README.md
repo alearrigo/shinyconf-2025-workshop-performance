@@ -11,4 +11,6 @@
 3. Hacer *source* del siguiente archivo: "scripts/01_setup.R"
 
 No se va a requerir nada para la PC de cada participante
-ya que todo el código y ejercicios va a poder ejecutarse en la plataforma.
+ya que todo el código y ejercicios va a poder ejecutarse en la plataforma. 
+
+De todos modos, es posible clonar el repositorio localmente y ejecutar el script de setup.
