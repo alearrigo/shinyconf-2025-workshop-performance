@@ -1,6 +1,10 @@
 library(shiny)
 library(bslib)
 library(tidyverse)
+library(future)
+library(promises)
+
+plan(multisession)
 
 survey <- arrow::read_parquet("data/survey.parquet")
 
@@ -20,8 +24,8 @@ ui <- page_sidebar(
       value = 100,
       step = 10
     ),
-    actionButton(
-      inputId = "compute", 
+    input_task_button(
+      id = "compute", 
       label = "Calcular"
     )
   ),
@@ -53,13 +57,21 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
-  filtered <- reactive({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age)
+  filter_task <- ExtendedTask$new(function(p_survey, p_region, p_age) {
+    future_promise({
+      p_survey |> 
+        dplyr::filter(region == p_region) |> 
+        dplyr::filter(age <= p_age)
+    })
   }) |> 
-    bindCache(input$region, input$age) |> 
+    bind_task_button("compute")
+  
+  observe(filter_task$invoke(survey, input$region, input$age)) |> 
     bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  filtered <- reactive({
+    filter_task$result()
+  })
   
   output$table <- DT::renderDT({
     filtered()

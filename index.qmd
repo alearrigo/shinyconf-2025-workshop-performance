@@ -565,20 +565,319 @@ Otra opcion:
 
 ## Ejercicio 4 - Shiny
 
-
+Implementa alguna de las optimizaciones mencionadas.
 
 # Optimización - Async
 
-## Programación Asíncrona {.smaller}
+## Programación síncrona
 
-- Casos de uso:
-  - Operaciones I/O (bases de datos, APIs)
-  - Cálculos intensivos
-- Herramientas:
-  - Paquetes {promises} y {future}
+::: {.columns}
+
+::: {.column}
+
+- Las tareas se ejecutan secuencialmente
+- Es fácil de entender e implementa
+
+:::
+
+::: {.column}
+
+![](https://m.media-amazon.com/images/I/519J5jAClAL._AC_SL1001_.jpg)
+
+:::
+
+:::
+
+Ejemplo: Una cocina con una hornilla. Si empecé a freir pollo, no puedo freir nada hasta terminar de freir el pollo.
+
+
+## Proramación asíncrona
+
+::: {.columns}
+::: {.column}
+
+- Las tareas pueden iniciar y ejecutarse independientemente
+- Mientras se procesa una tarea, otras pueden ser iniciadas o completadas.
+
+:::
+
+::: {.column}
+
+![](https://m.media-amazon.com/images/I/71CuqWukldL._AC_SL1500_.jpg)
+:::
+
+:::
+
+Ejemplo: Una cocina con múltiples hornillas. Si empecé a freir pollo en una hornilla, puedo freir otra cosa en una hornilla diferente.
+
+---
+
+Hornilla == Proceso en la PC
+
+::: {.callout-warning title="Cuidado"}
+A más hornillas, también es más fácil quemar la comida!
+:::
+
+
+## Posibles complicaciones
+
+- El código se hace más dificil de entender
+- Sin adecuado control, pueden sobreescribir sus resultados
+- Lógica circular. Proceso A espera a Proceso B, quien espera a Proceso A
+- Incrementa la dificultad para hacer debugging porque los errores ocurren en otro lado
+- Mayor consumo de energía
+
+## Beneficios
+
+- Operaciones largas no bloquean a otras operaciones
+- Flexibilidad: mi sistema se adapta a retrasos inesperados
+- La aplicación se mantiene responsiva, no se "cuelga"
+- Uso eficiente de recursos. "Pagué por 8 procesadores y voy a usar 8 procesadores".
+- Escalabilidad a otro nivel
+
+## Casos de uso
+
+- Operaciones I/O:
+  - Query a bases de datos
+  - Solicitudes a APIs
+- Cálculos intensivos
+
+## ¿Qué necesito?
+
+- CPU con varios núcleos/hilos.
+- Paquetes:
+  - {promises}
+  - {future}
   - ExtendedTask (Shiny 1.8.1+)
+  
+::: {.callout-note title="Nota"}
+ExtendedTask es un recurso bastante nuevo. También es posible usar solo `future()` o `future_promise()` dentro de un reactive para lograr un efecto similar, aunque con menos ventajas.
+:::
+
+## Setup inicial
+
+```{r}
+#| code-line-numbers: "|4-7"
+library(shiny)
+library(bslib)
+library(tidyverse)
+library(future)
+library(promises)
+
+plan(multisession)
+
+survey <- arrow::read_parquet("data/survey.parquet")
+```
+
+Esto le dice al proceso que corre la app que los *futures* creados se resuelvan en sesiones paralelas.
+
+## Procedimiento
+
+1. Crear un objeto `ExtendedTask`.
+2. Hacer bind a un task button
+3. Invocar la tarea
+4. Recuperar los resultados
+
+<https://shiny.posit.co/r/articles/improve/nonblocking/>
+  
+## Punto de partida - UI
+
+```{r}
+#| code-line-numbers: "|5"
+ui <- page_sidebar(
+  sidebar = sidebar(
+    selectInput(inputId = "region", ...),
+    sliderInput(inputId = "age", ...),
+    actionButton(inputId = "compute", label = "Calcular")
+  ),
+  ...
+)
+```
+
+## Modificaciones - UI
+
+```{r}
+#| code-line-numbers: "5"
+ui <- page_sidebar(
+  sidebar = sidebar(
+    selectInput(inputId = "region", ...),
+    sliderInput(inputId = "age", ...),
+    input_task_button(id = "compute", label = "Calcular")
+  ),
+  ...
+)
+```
+
+Cambiamos el `actionButton()` por `bslib::input_task_button()`. Este botón tendrá un comportamiento especial.
+
+## Punto de partida - Server
+
+```{r}
+#| code-line-numbers: "|3-5|8|7"
+server <- function(input, output, session) {
+  filtered <- reactive({
+    survey |> 
+        filter(region == input$region) |> 
+        filter(age <= input$age)
+  }) |> 
+    bindCache(input$region, input$age) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  output$table <- DT::renderDT(filtered())
+  ...
+}
+```
+
+## Modificaciones - Server
+
+```{r}
+server <- function(input, output, session) {
+  filter_task <- ExtendedTask$new(function(p_survey, p_region, p_age) {
+    future_promise({
+      p_survey |> 
+        dplyr::filter(region == p_region) |> 
+        dplyr::filter(age <= p_age)
+    })
+  }) |> 
+    bind_task_button("compute")
+  
+  observe(filter_task$invoke(survey, input$region, input$age)) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  filtered <- reactive(filter_task$result())
+  
+  output$table <- DT::renderDT(filtered())
+  ...
+}
+```
+
+## Modificaciones - Server
+
+Paso 1: Se creó un `ExtendedTask` que envuelve a una función. 
+
+```{r}
+#| code-line-numbers: "|2|4-6|3,7"
+server <- function(input, output, session) {
+  filter_task <- ExtendedTask$new(function(p_survey, p_region, p_age) {
+    future_promise({
+      p_survey |> 
+        dplyr::filter(region == p_region) |> 
+        dplyr::filter(age <= p_age)
+    })
+  }) |> 
+    bind_task_button("compute")
+  
+  ...
+}
+```
+
+
+Dentro de la función, tenemos la lógica de nuestro cálculo envuelta en un `future_promise()`. La función asume una sesión en blanco.
+
+## Modificaciones - Server
+
+Paso 2: Se hizo bind a un task button
+
+```{r}
+#| code-line-numbers: "|5,8"
+server <- function(input, output, session) {
+  filter_task <- ExtendedTask$new(function(...) {
+    ...
+  }) |> 
+    bind_task_button("compute")
+  
+  observe(...) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+
+  ...
+}
+```
+
+
+::: {.callout-note title="Nota"}
+`bind_task_button()` requiere el mismo id que `input_task_button()`. `bindEvent()` acepta cualquier reactive.
+:::
+
+## Modificaciones - Server
+
+Paso 3: Invocar la tarea con `ExtendedTask$invoke()`.
+
+```{r}
+#| code-line-numbers: "|2,7"
+server <- function(input, output, session) {
+  filter_task <- ExtendedTask$new(function(p_survey, p_region, p_age) {
+    ...
+  }) |> 
+    bind_task_button("compute")
+  
+  observe(filter_task$invoke(survey, input$region, input$age)) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  filtered <- reactive(filter_task$result())
+  
+  output$table <- DT::renderDT(filtered())
+  ...
+}
+```
+
+Se le provee la data necesaria para trabajar. Tomar en cuenta que `invoke()` no tiene valor de retorno (es un side-effect).
+
+## Modificaciones - Server
+
+Paso 4: Recuperar los resultados con `ExtendedTask$result()`.
+
+```{r}
+#| code-line-numbers: "|10|12"
+server <- function(input, output, session) {
+  filter_task <- ExtendedTask$new(function(...) {
+    ...
+  }) |> 
+    bind_task_button("compute")
+  
+  observe(filter_task$invoke(...)) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  filtered <- reactive(filter_task$result())
+  
+  output$table <- DT::renderDT(filtered())
+  ...
+}
+```
+
+`result()` se comporta como cualquier reactive. 
+
+## Modificaciones - Server
+
+```{r}
+server <- function(input, output, session) {
+  filter_task <- ExtendedTask$new(function(p_survey, p_region, p_age) {
+    future_promise({
+      p_survey |> 
+        dplyr::filter(region == p_region) |> 
+        dplyr::filter(age <= p_age)
+    })
+  }) |> 
+    bind_task_button("compute")
+  
+  observe(filter_task$invoke(survey, input$region, input$age)) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  filtered <- reactive(filter_task$result())
+  
+  output$table <- DT::renderDT(filtered())
+  ...
+}
+```
+
+¡Perdimos el cache! `ExtendedTask()` no es 100% compatible con las estrategias de caching vistas.
 
 ## Ejercicio 5 - Async
+
+# Temas avanzados
+
+## ¿Dónde encuentro más información?
+
+
 
 
 # Preguntas
