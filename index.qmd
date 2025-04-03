@@ -1,6 +1,6 @@
 ---
-title: "Optimización del Rendimiento en Shiny"
-subtitle: "Técnicas y Mejores Prácticas"
+title: "Optimizing Performance in Shiny"
+subtitle: "Tips and Best Practices"
 author: "Samuel Calderon"
 format: 
   revealjs:
@@ -8,7 +8,7 @@ format:
     transition: slide
     slide-number: true
     logo: img/Appsilon_logo.svg
-    footer: "LatinR: 2024-11-18"
+    footer: "ShinyConf 2025: 2025-04-09"
 mermaid: 
   theme: default
 execute: 
@@ -20,18 +20,18 @@ execute:
 
 <https://github.com/Appsilon/latin-r-2024>
 
-## Estructura del Taller (3 horas)
+## Workshop Structure (3 hours)
 
-- Introducción 
-- Ciclo de optimización: Ejercicio 1 - Benchmarking
-- Profiling: Ejercicio 2
-- Optimización - Data: Ejercicio 3
-- Optimización - Shiny: Ejercicio 4
-- Optimización - Async: Ejercicio 5
-- Temas avanzados
-- Preguntas
+- Introduction  
+- Optimization Cycle: Exercise 1 - Benchmarking  
+- Profiling: Exercise 2  
+- Optimization - Data: Exercise 3  
+- Optimization - Shiny: Exercise 4  
+- Optimization - Async: Exercise 5  
+- Advanced Topics  
+- Q&A
 
-# Introducción
+# Introduction
 
 ## Appsilon
 
@@ -41,76 +41,74 @@ execute:
 
 ## We are hiring!
 
-- [R shiny developer](https://jobs.lever.co/appsilon/6e6cea0f-4ec3-439a-8456-d5e31e51c05b?lever-origin=ap%5B%E2%80%A6%5Dloper)
-- [R developer with life science](https://jobs.lever.co/appsilon/d5c698a5-9f93-4fb4-a22b-b4abaf77de5d?lever-origin=applied&lever-source%5B%5D=CAREERS)
-- [Project Manager (US time zone)](https://jobs.lever.co/appsilon/e8594bfe-2c9a-4504-b978-ff3242bc9c73?lever-origin=applied&lever-source%5B%5D=careers%20page?utm_medium%3Djob-boards)
+- [R shiny developer](https://appsilon-1739358905.teamtailor.com/jobs/5638402-senior-r-shiny-developer?promotion=1368563-trackable-share-link-careers)
+- [R developer with life science bg](https://appsilon-1739358905.teamtailor.com/jobs/5669113-r-developer-with-life-science-background?promotion=1383980-trackable-share-link-careers)
 
-Para ver más posiciones: <https://www.appsilon.com/careers>
+To see more open positions: <https://www.appsilon.com/careers>
 
-## Quién soy
+## whoami
 
-- Politólogo y ahora R shiny developer
-- De Lima, Perú
-- Contacto:
+- Political Scientist, now also R shiny developer
+- From Lima, Perú
+- Contact:
   - Web: <https://www.samuelenrique.com>
   - Github: <https://github.com/calderonsamuel>
   - Linkedin: <https://www.linkedin.com/in/samuelcalderon/>
   
-## ¿Quiénes son ustedes?
+## Who are you?
 
-- Compartir en el chat:
-  - Nombre
-  - De dónde son y qué hora es en su ciudad
-  - Background profesional (brevísimo)
-  - 3 paquetes de R favoritos (si son de nicho, mejor)
+- Share in the chat:
+  - Name
+  - Where are you from? What time is it there?
+  - Background (briefly!)
+  - Your favorite niche R package
 
 
-# Ciclo de Optimización
+# Optimization Cycle  
 
-## Primero lo primero
+## First Things First  
 
-¿Qué es una computadora? La interacción de 3 componentes principales
+What is a computer? The interaction of three main components
 
 ![](img/computer-core-elements.png)
 
-## ¿Qué es optimizar?
+## What is Optimization?  
 
 ![](img/computer-task-manager.png)
 
-¡Depende de la necesidad! 
+It depends on the need!  
 
-En general, pensemos en tiempo (CPU) o espacio (memory/storage). El dinero es un eje secreto.
+In general, think in terms of time (CPU) or space (memory/storage). Money is a hidden factor.
 
-## El ciclo graficado
+## The Cycle Illustrated  
 
 ![](img/optimizacion-loop.png)
 
-<https://www.appsilon.com/post/optimize-shiny-app-performance>
+<https://www.appsilon.com/post/optimize-shiny-app-performance>  
 
-## A saber en cada etapa
+## Key Aspects at Each Stage  
 
-- Benchmarking: ¿Performa como esperamos?
-- Profilling: ¿Dónde están los cuellos de botella?
-- Estimación/Recomendación: ¿Qué puedo hacer?
-- Optimización: Tomar decisión e implementar
+- **Benchmarking**: Does it perform as expected?  
+- **Profiling**: Where are the bottlenecks?  
+- **Estimation/Recommendation**: What can be done?  
+- **Optimization**: Make decisions and implement  
 
-## Tipos de benchmarking 
+## Types of Benchmarking  
 
-- Manual
-- Avanzado ([shinyloadtest](https://rstudio.github.io/shinyloadtest/index.html)):
+- **Manual**  
+- **Advanced** ([shinyloadtest](https://rstudio.github.io/shinyloadtest/index.html))  
 
-## Ejercicio 1 - Benchmarking
+## Exercise 1 - Benchmarking  
 
-![](img/benchmark-exercise.png)
+![](img/benchmark-exercise.png)  
 
----
+---  
 
-- Prueba la app y anota cuánto tiempo te toma ver la información para:
+- Test the app and note how long it takes to display the information for:  
+  - 3 different cities  
+  - 3 different maximum ages  
 
-- 3 ciudades diferentes
-- 3 edades máximas diferentes
-
-Enlace: <https://01933b4a-2e76-51f9-79f4-629808c48a59.share.connect.posit.cloud/>
+Link: <https://01933b4a-2e76-51f9-79f4-629808c48a59.share.connect.posit.cloud/>
 
 # Profiling
 
