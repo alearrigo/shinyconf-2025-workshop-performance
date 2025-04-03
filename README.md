@@ -1,24 +1,23 @@
-# LatinR 2024
+# ShinyConf 2025
 
-# Optimización del Rendimiento en Shiny: Técnicas y Mejores Prácticas
+# Optimizing Performance in Shiny: Tips and Best Practices
 
-## Requisitos
+## Requirements  
 
-1. Crear cuenta en <https://posit.cloud/>. Con la versión gratuita es suficiente.
-2. Crear un proyecto de una de las siguientes maneras:
-  - A partir de este repo: <https://github.com/Appsilon/latin-r-2024>
-  - Guardando una copia de este proyecto: <https://posit.cloud/content/9275522>
-3. Hacer *source* del siguiente archivo: "scripts/01_setup.R"
+1. Create an account at <https://posit.cloud/>. The free version is sufficient.  
+2. Create a project using one of the following methods:  
+   - From this repository: <https://github.com/Appsilon/shinyconf-2025-workshop-performance>  
+   - By saving a copy of this project: <https://posit.cloud/content/9275522>  
+3. Run *source* on the following file: `"scripts/01_setup.R"`  
 
-No se va a requerir nada para la PC de cada participante
-ya que todo el código y ejercicios va a poder ejecutarse en la plataforma. 
+No local setup is required for participants, as all code and exercises will be run on the platform.  
 
-De todos modos, es posible clonar el repositorio localmente y ejecutar el script de setup.
+However, it is possible to clone the repository locally and execute the setup script.  
 
-## Instrucciones
+## Instructions  
 
-- Presentación: https://appsilon.github.io/latin-r-2024/
+- Presentation: <https://appsilon.github.io/shinyconf-2025-workshop-performance/>  
 
-Trabajar en la rama "main". El archivo app.R cuenta con el código de la shiny app que vamos a optimizar. 
-La rama "app-slow" tiene una copia de este mismo archivo, mientras que la rama "app-fast" 
-tiene una copia del archivo después de haber realizado las optimizaciones presentadas en el taller. 
+Work on the **"main"** branch. The **app.R** file contains the code for the Shiny app we will optimize.  
+The **"app-slow"** branch has a copy of this file before optimization, while the **"app-fast"** branch  
+contains a copy after implementing the optimizations presented in the workshop.
