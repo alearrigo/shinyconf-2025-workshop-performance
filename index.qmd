@@ -112,45 +112,46 @@ Link: <https://01933b4a-2e76-51f9-79f4-629808c48a59.share.connect.posit.cloud/>
 
 # Profiling
 
-## Profiling - Herramientas en R
+## Profiling - Tools in R  
 
-El profiling es una técnica utilizada para identificar cuellos de botella en el rendimiento de tu código:
+Profiling is a technique used to identify performance bottlenecks in your code.  
 
-## `{profvis}`
+## `{profvis}`  
 
-Es una herramienta interactiva que proporciona una visualización detallada del tiempo de ejecución de tu código.
+An interactive tool that provides a detailed visualization of your code's execution time.  
 
-- Instalación:
+- Installation:  
 
 ```{r}
 install.packages("profvis")
 ```
 
-- Uso básico:
+- Basic usage:
 
 ```{r}
 library(profvis)
 profvis({
-# Código a perfilar
+# Code to be profiled
 })
 ```
 
-## shiny.tictoc
+## shiny.tictoc  
 
-Una herramienta que usa Javascript para calcular el tiempo que toman las acciones en la app, desde el punto de vista del navegador.
+A tool that uses JavaScript to measure the time taken by actions in the app from the browser's perspective.  
 
-Es super fácil de añadir a una app.
+It is very easy to add to a Shiny app:  
 
-```{r}
+```r
 tags$script(
     src = "https://cdn.jsdelivr.net/gh/Appsilon/shiny.tictoc@v0.2.0/shiny-tic-toc.min.js"
 )
-```
+```  
 
-- Si no saben añadir JS: [Packaging Javscript code for Shiny](https://shiny.posit.co/r/articles/build/packaging-javascript/)
----
+- If you're unfamiliar with adding JavaScript: [Packaging JavaScript code for Shiny](https://shiny.posit.co/r/articles/build/packaging-javascript/)  
 
-Ejecutar cualquiera de estas operaciones en la consola de Javascript. 
+---  
+
+Run any of these operations in the JavaScript console.  
 
 ```js
 // Print out all measurements
@@ -166,53 +167,53 @@ showSummarisedMeasurements()
 await exportHtmlReport()
 ```
 
-Muchos navegadores cuentan con herramientas de desarrollador donde puedes encontrar una mientras tu app está corriendo.
+Many browsers have developer tools where you can find a profiler while your app is running.  
 
-## Usando profvis
+## Using profvis  
 
-Ubicar la herramienta en Rstudio
+Locate the tool in RStudio.
 
 ![](img/profiling-01.png)
 
 ---
 
-La consola de R mostrará el botón "Stop profiling". Esto significa que el profiler está activado.
+The R console will display the "Stop profiling" button. This means the profiler is active.
 
 ![](img/profiling-02.png)
 
-Corre tu shiny app e interactúa con ella. Luego, puedes detener la app y el profiler.
+Run your Shiny app and interact with it. Then, you can stop the app and the profiler.  
 
----
+---  
 
-El panel de edición de Rstudio te mostrará una nueva vista. 
+The RStudio source panel will display a new view.
 
 ![](img/profiling-03.png)
 
-La parte superior hace profiling de cada línea de código, la parte inferior muestra un *FlameGraph*, que indica el tiempo requerido por cada operación.
+The upper section profiles each line of code, while the lower section displays a *FlameGraph*, indicating the time required for each operation.
 
 ---
 
-También puede accederse a la pestaña "Data".
+You can also access the "Data" tab.
 
 ![](img/profiling-04.png)
 
-Esta indica cuánto tiempo y memoria se ha requerido por cada operación. Nos da un resumen de la medición.
+This section shows how much time and memory each operation requires, providing a summary of the measurement.  
 
----
+---  
 
-Para una revisión más exhaustiva del uso de `{profvis}`, puedes consultar la documentación oficial:
+For a more in-depth review of `{profvis}`, you can refer to the official documentation:  
 
-- Ejemplos: <https://profvis.r-lib.org/articles/rstudio.html>
-- Integración con RStudio: <https://profvis.r-lib.org/articles/rstudio.html>
+- Examples: <https://profvis.r-lib.org/articles/rstudio.html>  
+- Integration with RStudio: <https://profvis.r-lib.org/articles/rstudio.html>  
 
-## Ejercicio 2 - Profiling
+## Exercise 2 - Profiling  
 
-Realiza el profiling del archivo "app.R".
+Perform profiling on the **"app.R"** file.  
 
-- Interpreta los resultados
-  - ¿Cuáles son los puntos más críticos?
-  
-Toma en cuenta que estás probando esto para un solo usuario.
+- Interpret the results:  
+  - What are the most critical points?  
+
+Keep in mind that you are testing this for a single user.
 
 ## Optimización - Data
 
