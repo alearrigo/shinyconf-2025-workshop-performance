@@ -333,45 +333,43 @@ Samuel Calderon
 <h1>Profiling</h1>
 
 </section>
-<section id="profiling---herramientas-en-r" class="slide level2">
-<h2>Profiling - Herramientas en R</h2>
-<p>El profiling es una técnica utilizada para identificar cuellos de botella en el rendimiento de tu código:</p>
+<section id="profiling---tools-in-r" class="slide level2">
+<h2>Profiling - Tools in R</h2>
+<p>Profiling is a technique used to identify performance bottlenecks in your code.</p>
 </section>
 <section id="profvis" class="slide level2">
 <h2><code>{profvis}</code></h2>
-<p>Es una herramienta interactiva que proporciona una visualización detallada del tiempo de ejecución de tu código.</p>
+<p>An interactive tool that provides a detailed visualization of your code’s execution time.</p>
 <ul>
-<li>Instalación:</li>
+<li>Installation:</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"profvis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>Uso básico:</li>
+<li>Basic usage:</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">library</span>(profvis)</span>
 <span id="cb2-2"><a href=""></a><span class="fu">profvis</span>({</span>
-<span id="cb2-3"><a href=""></a><span class="co"># Código a perfilar</span></span>
+<span id="cb2-3"><a href=""></a><span class="co"># Code to be profiled</span></span>
 <span id="cb2-4"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="shiny.tictoc" class="slide level2">
 <h2>shiny.tictoc</h2>
-<p>Una herramienta que usa Javascript para calcular el tiempo que toman las acciones en la app, desde el punto de vista del navegador.</p>
-<p>Es super fácil de añadir a una app.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>tags<span class="sc">$</span><span class="fu">script</span>(</span>
+<p>A tool that uses JavaScript to measure the time taken by actions in the app from the browser’s perspective.</p>
+<p>It is very easy to add to a Shiny app:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>tags<span class="sc">$</span><span class="fu">script</span>(</span>
 <span id="cb3-2"><a href=""></a>    <span class="at">src =</span> <span class="st">"https://cdn.jsdelivr.net/gh/Appsilon/shiny.tictoc@v0.2.0/shiny-tic-toc.min.js"</span></span>
 <span id="cb3-3"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <ul>
-<li>Si no saben añadir JS: <a href="https://shiny.posit.co/r/articles/build/packaging-javascript/">Packaging Javscript code for Shiny</a></li>
+<li>If you’re unfamiliar with adding JavaScript: <a href="https://shiny.posit.co/r/articles/build/packaging-javascript/">Packaging JavaScript code for Shiny</a></li>
 </ul>
 </section>
 <section class="slide level2">
 
-<p>Ejecutar cualquiera de estas operaciones en la consola de Javascript.</p>
+<p>Run any of these operations in the JavaScript console.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href=""></a><span class="co">// Print out all measurements</span></span>
 <span id="cb4-2"><a href=""></a><span class="fu">showAllMeasurements</span>()</span>
 <span id="cb4-3"><a href=""></a></span>
@@ -383,49 +381,50 @@ Samuel Calderon
 <span id="cb4-9"><a href=""></a></span>
 <span id="cb4-10"><a href=""></a><span class="co">// To export an html file that visualizes measurements on a timeline</span></span>
 <span id="cb4-11"><a href=""></a><span class="cf">await</span> <span class="fu">exportHtmlReport</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Muchos navegadores cuentan con herramientas de desarrollador donde puedes encontrar una mientras tu app está corriendo.</p>
+<p>Many browsers have developer tools where you can find a profiler while your app is running.</p>
 </section>
-<section id="usando-profvis" class="slide level2">
-<h2>Usando profvis</h2>
-<p>Ubicar la herramienta en Rstudio</p>
+<section id="using-profvis" class="slide level2">
+<h2>Using profvis</h2>
+<p>Locate the tool in RStudio.</p>
 
 <img data-src="img/profiling-01.png" class="r-stretch"></section>
 <section class="slide level2">
 
-<p>La consola de R mostrará el botón “Stop profiling”. Esto significa que el profiler está activado.</p>
+<p>The R console will display the “Stop profiling” button. This means the profiler is active.</p>
 
-<img data-src="img/profiling-02.png" class="r-stretch"><p>Corre tu shiny app e interactúa con ella. Luego, puedes detener la app y el profiler.</p>
+<img data-src="img/profiling-02.png" class="r-stretch"><p>Run your Shiny app and interact with it. Then, you can stop the app and the profiler.</p>
 </section>
 <section class="slide level2">
 
-<p>El panel de edición de Rstudio te mostrará una nueva vista.</p>
+<p>The RStudio source panel will display a new view.</p>
 
-<img data-src="img/profiling-03.png" class="r-stretch"><p>La parte superior hace profiling de cada línea de código, la parte inferior muestra un <em>FlameGraph</em>, que indica el tiempo requerido por cada operación.</p>
+<img data-src="img/profiling-03.png" class="r-stretch"><p>The upper section profiles each line of code, while the lower section displays a <em>FlameGraph</em>, indicating the time required for each operation.</p>
 </section>
 <section class="slide level2">
 
-<p>También puede accederse a la pestaña “Data”.</p>
+<p>You can also access the “Data” tab.</p>
 
-<img data-src="img/profiling-04.png" class="r-stretch"><p>Esta indica cuánto tiempo y memoria se ha requerido por cada operación. Nos da un resumen de la medición.</p>
+<img data-src="img/profiling-04.png" class="r-stretch"><p>This section shows how much time and memory each operation requires, providing a summary of the measurement.</p>
 </section>
 <section class="slide level2">
 
-<p>Para una revisión más exhaustiva del uso de <code>{profvis}</code>, puedes consultar la documentación oficial:</p>
+<p>For a more in-depth review of <code>{profvis}</code>, you can refer to the official documentation:</p>
 <ul>
-<li>Ejemplos: <a href="https://profvis.r-lib.org/articles/rstudio.html" class="uri">https://profvis.r-lib.org/articles/rstudio.html</a></li>
-<li>Integración con RStudio: <a href="https://profvis.r-lib.org/articles/rstudio.html" class="uri">https://profvis.r-lib.org/articles/rstudio.html</a></li>
+<li>Examples: <a href="https://profvis.r-lib.org/articles/rstudio.html" class="uri">https://profvis.r-lib.org/articles/rstudio.html</a><br>
+</li>
+<li>Integration with RStudio: <a href="https://profvis.r-lib.org/articles/rstudio.html" class="uri">https://profvis.r-lib.org/articles/rstudio.html</a></li>
 </ul>
 </section>
-<section id="ejercicio-2---profiling" class="slide level2">
-<h2>Ejercicio 2 - Profiling</h2>
-<p>Realiza el profiling del archivo “app.R”.</p>
+<section id="exercise-2---profiling" class="slide level2">
+<h2>Exercise 2 - Profiling</h2>
+<p>Perform profiling on the <strong>“app.R”</strong> file.</p>
 <ul>
-<li>Interpreta los resultados
+<li>Interpret the results:
 <ul>
-<li>¿Cuáles son los puntos más críticos?</li>
+<li>What are the most critical points?</li>
 </ul></li>
 </ul>
-<p>Toma en cuenta que estás probando esto para un solo usuario.</p>
+<p>Keep in mind that you are testing this for a single user.</p>
 </section>
 <section id="optimización---data" class="slide level2">
 <h2>Optimización - Data</h2>
