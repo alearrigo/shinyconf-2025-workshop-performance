@@ -18,6 +18,6 @@ However, it is possible to clone the repository locally and execute the setup sc
 
 - Presentation: <https://appsilon.github.io/shinyconf-2025-workshop-performance/>  
 
-Work on the **"main"** branch. The **app.R** file contains the code for the Shiny app we will optimize.  
-The **"app-slow"** branch has a copy of this file before optimization, while the **"app-fast"** branch  
-contains a copy after implementing the optimizations presented in the workshop.
+The **app.R** file contains the code for the Shiny app we will optimize.  
+The **"./scripts/02_app_slow.R"** branch is a copy of this file before optimization, while the **"./scripts/03_app_fast.R"** file  
+contains some of the optimizations presented in the workshop.
