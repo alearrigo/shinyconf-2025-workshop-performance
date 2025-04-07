@@ -426,27 +426,32 @@ Samuel Calderon
 </ul>
 <p>Keep in mind that you are testing this for a single user.</p>
 </section>
-<section id="optimización---data" class="slide level2">
-<h2>Optimización - Data</h2>
+<section id="optimization---data" class="slide level2">
+<h2>Optimization - Data</h2>
 <ol type="1">
-<li>Usar opciones más rápidas para cargar datos</li>
-<li>Usar formatos de archivo más eficientes</li>
-<li>Pre-procesar los cálculos</li>
-<li>Usar bases de datos. Puede requerir aprender SQL.</li>
+<li>Use faster options for loading data<br>
+</li>
+<li>Use more efficient file formats<br>
+</li>
+<li>Pre-process calculations<br>
+</li>
+<li>Use databases (may require learning SQL)</li>
 </ol>
-<p>¡Puedes combinar todo!</p>
+<p>You can combine all these strategies!</p>
 </section>
-<section id="cargar-datos-más-rápido" class="slide level2">
-<h2>Cargar datos más rápido</h2>
+<section id="loading-data-faster" class="slide level2">
+<h2>Loading Data Faster</h2>
 <ul>
-<li>data.table::fread()</li>
-<li>vroom::vroom()</li>
-<li>readr::read_csv()</li>
+<li><code>data.table::fread()</code><br>
+</li>
+<li><code>vroom::vroom()</code><br>
+</li>
+<li><code>readr::read_csv()</code></li>
 </ul>
 </section>
-<section id="ejemplo" class="slide level2">
-<h2>Ejemplo</h2>
-<p>NO ejecutar durante el workshop porque toma tiempo en correr</p>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<p><strong>DO NOT</strong> run during the workshop as it takes time to execute.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">suppressMessages</span>(</span>
 <span id="cb5-2"><a href=""></a>  microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
 <span id="cb5-3"><a href=""></a>    <span class="at">read.csv =</span> <span class="fu">read.csv</span>(<span class="st">"data/personal.csv"</span>),</span>
@@ -462,18 +467,21 @@ Samuel Calderon
 <span id="cb5-13"><a href=""></a><span class="co">#&gt;     vroom  176.7522  189.8111  205.2099  197.9027  206.2619  495.2784   100</span></span>
 <span id="cb5-14"><a href=""></a><span class="co">#&gt;     fread  291.9581  370.8261  410.3995  398.9489  439.7827  638.0363   100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="formatos-de-datos-eficientes" class="slide level2">
-<h2>Formatos de datos eficientes:</h2>
+<section id="efficient-data-formats" class="slide level2">
+<h2>Efficient Data Formats:</h2>
 <ul>
-<li>Parquet (via {arrow})</li>
-<li>Feather (compatibilidad con Python)</li>
-<li>fst</li>
-<li>RDS (nativo de R)</li>
+<li><strong>Parquet</strong> (via <code>{arrow}</code>)<br>
+</li>
+<li><strong>Feather</strong> (compatible with Python)<br>
+</li>
+<li><strong>fst</strong><br>
+</li>
+<li><strong>RDS</strong> (native to R)</li>
 </ul>
 </section>
-<section id="ejemplo-1" class="slide level2">
-<h2>Ejemplo</h2>
-<p>NO ejecutar durante el workshop porque toma tiempo en correr</p>
+<section id="example-1" class="slide level2">
+<h2>Example</h2>
+<p><strong>DO NOT</strong> run during the workshop as it takes time to execute.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">suppressMessages</span>(</span>
 <span id="cb6-2"><a href=""></a>  microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
 <span id="cb6-3"><a href=""></a>    <span class="at">read.csv =</span> <span class="fu">read.csv</span>(<span class="st">"data/personal.csv"</span>),</span>
@@ -489,18 +497,20 @@ Samuel Calderon
 <span id="cb6-13"><a href=""></a><span class="co">#&gt;   parquet   64.5013   67.29655   84.48485   70.70505   87.81995  405.147   100</span></span>
 <span id="cb6-14"><a href=""></a><span class="co">#&gt;       rds  558.5518  644.32460  782.37898  695.07300  860.85075 1379.519   100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="pre-procesar-cálculos" class="slide level2">
-<h2>Pre-procesar cálculos</h2>
+<section id="pre-processing-calculations" class="slide level2">
+<h2>Pre-processing Calculations</h2>
 <ul>
-<li>Filtrado previo: Menos tamaño</li>
-<li>Transformación o agregación previa: Menos tiempo</li>
-<li>Uso de índices: Búsqueda rápida</li>
+<li><strong>Pre-filtering</strong>: Reduces size<br>
+</li>
+<li><strong>Pre-transforming or aggregating</strong>: Saves time<br>
+</li>
+<li><strong>Using indexes</strong>: Enables fast searches</li>
 </ul>
-<p>Es, en esencia, <em>caching</em>. Personalmente, mi estrategia favorita.</p>
-<p>Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, streaming data), o la data no puede ser guardada en cualquier lugar (seguridad, privacidad).</p>
+<p>This is essentially <strong>caching</strong>, which is personally my favorite strategy.</p>
+<p>It can be challenging to use if real-time calculations are required (e.g., stock exchange, streaming data) or if data storage is restricted due to security or privacy concerns.</p>
 </section>
-<section id="sin-pre-procesamiento" class="slide level2">
-<h2>Sin pre-procesamiento</h2>
+<section id="without-pre-processing" class="slide level2">
+<h2>Without pre-processing</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># app.R</span></span>
 <span id="cb7-2"><a href=""></a>survey <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/survey.csv"</span>)</span>
@@ -514,8 +524,8 @@ Samuel Calderon
 <span id="cb7-10"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="con-pre-procesamiento" class="slide level2">
-<h2>Con pre-procesamiento</h2>
+<section id="with-pre-processing" class="slide level2">
+<h2>With pre-processing</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># script.R</span></span>
 <span id="cb8-2"><a href=""></a>survey <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/survey.csv"</span>)</span>
@@ -540,38 +550,38 @@ Samuel Calderon
 <span id="cb9-6"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="bases-de-datos-relacionales" class="slide level2">
-<h2>Bases de Datos relacionales</h2>
+<section id="relational-databases" class="slide level2">
+<h2>Relational Databases</h2>
 <ul>
-<li><strong>Escalabilidad</strong>: Las bases de datos pueden manejar grandes volúmenes de datos de manera eficiente.</li>
-<li><strong>Consultas Rápidas</strong>: Permiten realizar consultas complejas de manera rápida.</li>
-<li><strong>Persistencia</strong>: Los datos se almacenan de manera persistente, lo que permite su recuperación en cualquier momento.</li>
+<li><strong>Scalability</strong>: Databases can efficiently handle large volumes of data.</li>
+<li><strong>Fast Queries</strong>: They allow complex queries to be performed quickly.</li>
+<li><strong>Persistence</strong>: Data is stored persistently, allowing for retrieval at any time.</li>
 </ul>
 </section>
 <section class="slide level2">
 
-<p>Algunos ejemplos notables son SQLite, MySQL, PostgreSQL, DuckDB.</p>
-<p><a href="https://www.freecodecamp.org/learn/relational-database/">freeCodeCamp</a> tiene un buen curso para principiantes.</p>
+<p>Some notable examples are SQLite, MySQL, PostgreSQL, DuckDB.</p>
+<p><a href="https://www.freecodecamp.org/learn/relational-database/">freeCodeCamp</a> offers a good course for beginners.</p>
 </section>
-<section id="ejercicio-3---data" class="slide level2">
-<h2>Ejercicio 3 - Data</h2>
-<p>Implementa una estrategia de optimización</p>
+<section id="exercise-3---data" class="slide level2">
+<h2>Exercise 3 - Data</h2>
+<p>Implement an optimization strategy</p>
 </section></section>
 <section>
-<section id="optimización---shiny" class="title-slide slide level1 center">
-<h1>Optimización - Shiny</h1>
+<section id="optimization---shiny" class="title-slide slide level1 center">
+<h1>Optimization - Shiny</h1>
 
 </section>
-<section id="cuando-una-app-arranca" class="slide level2">
-<h2>Cuando una app arranca</h2>
+<section id="when-an-app-starts" class="slide level2">
+<h2>When an app starts</h2>
 
 <img data-src="img/diagrama1.png" class="r-stretch"></section>
 <section class="slide level2">
 
-<p>Del lado de shiny, optimizar consiste básicamente en hacer que la app (en realidad, el procesador) haga el menor trabajo posible.</p>
+<p>On the Shiny side, optimization basically consists of making the app (actually, the CPU) do as little work as possible.</p>
 </section>
-<section id="reducir-reactividad" class="slide level2">
-<h2>Reducir reactividad</h2>
+<section id="reducing-reactivity" class="slide level2">
+<h2>Reducing reactivity</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|3,4,5,9,10,11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb10-2"><a href=""></a>  output<span class="sc">$</span>table <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
@@ -593,7 +603,7 @@ Samuel Calderon
 </section>
 <section class="slide level2">
 
-<p><code>reactive()</code> al rescate</p>
+<p><code>reactive()</code> to the rescue</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11" data-code-line-numbers="|2-6|9,13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb11-2"><a href=""></a>  filtered <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
@@ -616,11 +626,11 @@ Samuel Calderon
 </div>
 
 <aside><div>
-<p>Usamos más de espacio (memoria) para reducir tiempo (CPU)</p>
+<p>We use more space (memory) to reduce time (CPU)</p>
 </div></aside></section>
-<section id="controlar-reactividad" class="slide level2">
-<h2>Controlar reactividad</h2>
-<p>Puedes encadenar <code>bindEvent()</code> a un <code>reactive()</code> u <code>observe()</code>.</p>
+<section id="controlling-reactivity" class="slide level2">
+<h2>Controlling reactivity</h2>
+<p>You can chain <code>bindEvent()</code> to a <code>reactive()</code> or <code>observe()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>my_reactive <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
 <span id="cb12-2"><a href=""></a>  <span class="co"># slow reactive computation</span></span>
@@ -634,7 +644,7 @@ Samuel Calderon
 </div>
 
 <aside><div>
-<p>En versiones pasadas, esto se hacía con <code>observeEvent()</code> o <code>eventReactive()</code>.</p>
+<p>In previous versions, this was only possible with <code>observeEvent()</code> or <code>eventReactive()</code>.</p>
 </div></aside></section>
 <section class="slide level2">
 
@@ -643,7 +653,7 @@ Samuel Calderon
 <span id="cb13-2"><a href=""></a>  <span class="at">sidebar =</span> <span class="fu">sidebar</span>(</span>
 <span id="cb13-3"><a href=""></a>    <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"region"</span>, ...),</span>
 <span id="cb13-4"><a href=""></a>    <span class="fu">sliderInput</span>(<span class="at">inputId =</span> <span class="st">"age"</span>, ...),</span>
-<span id="cb13-5"><a href=""></a>    <span class="fu">actionButton</span>(<span class="at">inputId =</span> <span class="st">"compute"</span>, <span class="at">label =</span> <span class="st">"Calcular"</span>)</span>
+<span id="cb13-5"><a href=""></a>    <span class="fu">actionButton</span>(<span class="at">inputId =</span> <span class="st">"compute"</span>, <span class="at">label =</span> <span class="st">"Compute"</span>)</span>
 <span id="cb13-6"><a href=""></a>  ),</span>
 <span id="cb13-7"><a href=""></a>  ...</span>
 <span id="cb13-8"><a href=""></a>)</span>
@@ -657,14 +667,14 @@ Samuel Calderon
 <span id="cb13-16"><a href=""></a>    <span class="fu">bindEvent</span>(input<span class="sc">$</span>compute, <span class="at">ignoreNULL =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-17"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora <code>filtered()</code> solo se actualizará cuando haya interacción con <code>input$compute</code>.</p>
+<p>Now <code>filtered()</code> will only update when there is interaction with <code>input$compute</code>.</p>
 
 <aside><div>
-<p><code>ignoreNULL = FALSE</code> permite ejecutar el <code>reactive()</code> al iniciar la app.</p>
+<p><code>ignoreNULL = FALSE</code> allows the <code>reactive()</code> to execute when the app starts.</p>
 </div></aside></section>
-<section id="estrategias-de-caché" class="slide level2">
-<h2>Estrategias de Caché</h2>
-<p><code>bindCache()</code> nos permite guardar cómputos al vuelo en base a ciertas <em>keys</em>.</p>
+<section id="caching-strategies" class="slide level2">
+<h2>Caching Strategies</h2>
+<p><code>bindCache()</code> allows us to store computations on the fly based on certain <em>keys</em>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14" data-code-line-numbers="|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb14-2"><a href=""></a>  filtered <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
@@ -676,69 +686,69 @@ Samuel Calderon
 <span id="cb14-8"><a href=""></a>    <span class="fu">bindEvent</span>(input<span class="sc">$</span>compute, <span class="at">ignoreNULL =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb14-9"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Cuando una combinación vuelva a aparecer, se leerá el valor en lugar de recalcularlo.</p>
+<p>When a combination appears again, the value will be read instead of recalculated.</p>
 
 <aside><div>
-<p><code>bindEvent()</code> no es obligatorio para usar <code>bindCache()</code>.</p>
+<p><code>bindEvent()</code> is not mandatory to use <code>bindCache()</code>.</p>
 </div></aside></section>
 <section class="slide level2">
 
 <ol start="2" type="1">
-<li>Niveles de caché:</li>
+<li>Cache levels:</li>
 </ol>
 <ul>
-<li>Nivel aplicación: <code>cache = "app"</code> (default)</li>
-<li>Nivel sesión: <code>cache = "session"</code></li>
-<li>Personalizado: <code>cache object + opciones</code></li>
+<li>Application level: <code>cache = "app"</code> (default)</li>
+<li>Session level: <code>cache = "session"</code></li>
+<li>Custom: <code>cache object + options</code></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">bindCache</span>(..., <span class="at">cache =</span> <span class="st">"app"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Por defecto, se usará un máximo de 200 Mb de caché.</p>
+<p>By default, a maximum of 200 Mb of cache will be used.</p>
 
 <aside><div>
-<p>Potencialmente mucho uso de memoria/storage, para reducir tiempo de procesamiento.</p>
+<p>Potentially high memory/storage usage to reduce processing time.</p>
 </div></aside></section>
-<section id="comunicación-servidor---navegador" class="slide level2">
-<h2>Comunicación servidor - navegador</h2>
+<section id="server-browser-communication" class="slide level2">
+<h2>Server-browser communication</h2>
 <ul>
-<li>Enviar datos desde el servidor hacia el navegador toma tiempo.
+<li>Sending data from the server to the browser takes time.
 <ul>
-<li>Datos grandes -&gt; mayor tiempo de envío.</li>
-<li>Conexión lenta -&gt; mayor tiempo de envío</li>
+<li>Large data -&gt; longer sending time.</li>
+<li>Slow connection -&gt; longer sending time</li>
 </ul></li>
-<li>Igualmente, si los datos son grandes, al navegador le cuesta más leerlos y mostrarlos al usuario. Puede que la PC del usuario sea una tostadora!</li>
+<li>Similarly, if the data is large, the browser takes longer to read and display it to the user. The user’s PC might be a toaster!</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
-<li>¿Qué hacer?
+<li>What to do?
 <ul>
-<li>Reducir frecuencia de envíos (<code>bindEvent()</code>)</li>
-<li>Reducir tamaño de envíos</li>
-<li>Mandar lo mismo pero en partes más pequeñas (server-side processing o streaming)</li>
+<li>Reduce frequency of transmissions (<code>bindEvent()</code>)</li>
+<li>Reduce size of transmissions</li>
+<li>Send the same information but in smaller parts (server-side processing or streaming)</li>
 </ul></li>
 </ul>
 </section>
-<section id="reducir-tamaño-de-envíos" class="slide level2">
-<h2>Reducir tamaño de envíos</h2>
-<p>Es posible delegar ciertos cálculos al navegador. Por ejemplo, renderizar un gráfico con <a href="https://plotly.com/ggplot2/"><code>{plotly}</code></a> en lugar de <code>{ggplot2}</code>.</p>
+<section id="reducing-transmission-size" class="slide level2">
+<h2>Reducing transmission size</h2>
+<p>It’s possible to delegate certain calculations to the browser. For example, rendering a graph with <a href="https://plotly.com/ggplot2/"><code>{plotly}</code></a> instead of <code>{ggplot2}</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>plotly<span class="sc">::</span><span class="fu">plotlyOutput</span>() <span class="co"># en lugar de plotOutput</span></span>
-<span id="cb16-2"><a href=""></a>plotly<span class="sc">::</span><span class="fu">renderPlotly</span>() <span class="co"># en lugar de renderPlot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>plotly<span class="sc">::</span><span class="fu">plotlyOutput</span>() <span class="co"># instead of plotOutput</span></span>
+<span id="cb16-2"><a href=""></a>plotly<span class="sc">::</span><span class="fu">renderPlotly</span>() <span class="co"># instead of renderPlot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Con ello, se manda la “receta” del gráfico en lugar del gráfico mismo. Al recibir la receta, el navegador se encarga de renderizarla.</p>
+<p>With this, the “recipe” of the graph is sent instead of the graph itself. Upon receiving the recipe, the browser handles rendering it.</p>
 </section>
 <section class="slide level2">
 
-<p>Estas funciones traducen sintaxis de <code>ggplot2</code> a sintaxis de <code>plotly.js</code> de manera bastante eficiente. Tiene soporte para muchos tipos de gráficos.</p>
+<p>These functions translate <code>ggplot2</code> syntax to <code>plotly.js</code> syntax quite efficiently. It supports many types of graphs.</p>
 
-<img data-src="img/shiny-plotly.png" class="r-stretch"><p>Pero no te confíes, en muchos casos, el código va a necesitar retoques. Especialmente al usar extensiones de <code>ggplot2</code>.</p>
+<img data-src="img/shiny-plotly.png" class="r-stretch"><p>But don’t trust it blindly, in many cases, the code will need adjustments. Especially when using <code>ggplot2</code> extensions.</p>
 </section>
 <section class="slide level2">
 
-<p>Otros paquetes similares:</p>
+<p>Other similar packages:</p>
 <ul>
 <li><a href="https://davidgohel.github.io/ggiraph/">ggiraph</a></li>
 <li><a href="https://echarts4r.john-coene.com/">echarts4r</a></li>
@@ -749,137 +759,137 @@ Samuel Calderon
 </section>
 <section id="server-side-processing" class="slide level2">
 <h2>Server-side processing</h2>
-<p>En el caso de las tablas, el server-side processing permite paginar el resultado y enviar al navegador solo la página que está siendo mostrada en el momento.</p>
-<p>El paquete <code>{DT}</code> es una opción solida.</p>
+<p>For tables, server-side processing allows paginating the result and sending to the browser only the page that is being displayed at the moment.</p>
+<p>The <code>{DT}</code> package is a solid option.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>DT<span class="sc">::</span><span class="fu">DTOutput</span>() <span class="co"># en lugar de tableOutput()</span></span>
-<span id="cb17-2"><a href=""></a>DT<span class="sc">::</span><span class="fu">renderDT</span>() <span class="co"># en lugar de renderTable()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>DT<span class="sc">::</span><span class="fu">DTOutput</span>() <span class="co"># instead of tableOutput()</span></span>
+<span id="cb17-2"><a href=""></a>DT<span class="sc">::</span><span class="fu">renderDT</span>() <span class="co"># instead of renderTable()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <aside><div>
-<p>Si ya usabas <code>{DT}</code>, ¿sabías que hacía esto por defecto?</p>
+<p>If you were already using <code>{DT}</code>, did you know it did this by default?</p>
 </div></aside></section>
 <section class="slide level2">
 
-<p>Otra opcion:</p>
+<p>Another option:</p>
 <ul>
-<li><code>{reactable}</code> en conjunto con <code>{reactable.extras}</code> (by Appsilon).</li>
+<li><code>{reactable}</code> together with <code>{reactable.extras}</code> (by Appsilon).</li>
 </ul>
 </section>
-<section id="ejercicio-4---shiny" class="slide level2">
-<h2>Ejercicio 4 - Shiny</h2>
-<p>Implementa alguna de las optimizaciones mencionadas.</p>
+<section id="exercise-4---shiny" class="slide level2">
+<h2>Exercise 4 - Shiny</h2>
+<p>Implement one of the previously mentioned optimizations.</p>
 </section></section>
 <section>
-<section id="optimización---async" class="title-slide slide level1 center">
-<h1>Optimización - Async</h1>
+<section id="optimization---async" class="title-slide slide level1 center">
+<h1>Optimization - Async</h1>
 
 </section>
-<section id="programación-síncrona" class="slide level2">
-<h2>Programación síncrona</h2>
+<section id="synchronous-programming" class="slide level2">
+<h2>Synchronous programming</h2>
 <div class="columns">
 <div class="column">
 <ul>
-<li>Las tareas se ejecutan secuencialmente</li>
-<li>Es fácil de entender e implementa</li>
+<li>Tasks are executed sequentially</li>
+<li>It’s easy to understand and implement</li>
 </ul>
 </div><div class="column">
 <p><img data-src="https://m.media-amazon.com/images/I/519J5jAClAL._AC_SL1001_.jpg"></p>
 </div></div>
-<p>Ejemplo: Una cocina con una hornilla. Si empecé a freir pollo, no puedo freir nada hasta terminar de freir el pollo.</p>
+<p>Example: A kitchen with one burner. If I started frying chicken, I can’t fry anything else until I finish frying the chicken.</p>
 </section>
-<section id="proramación-asíncrona" class="slide level2">
-<h2>Proramación asíncrona</h2>
+<section id="asynchronous-programming" class="slide level2">
+<h2>Asynchronous programming</h2>
 <div class="columns">
 <div class="column">
 <ul>
-<li>Las tareas pueden iniciar y ejecutarse independientemente</li>
-<li>Mientras se procesa una tarea, otras pueden ser iniciadas o completadas.</li>
+<li>Tasks can start and run independently</li>
+<li>While one task is being processed, others can be started or completed.</li>
 </ul>
 </div><div class="column">
 <p><img data-src="https://m.media-amazon.com/images/I/71CuqWukldL._AC_SL1500_.jpg"></p>
 </div></div>
-<p>Ejemplo: Una cocina con múltiples hornillas. Si empecé a freir pollo en una hornilla, puedo freir otra cosa en una hornilla diferente.</p>
+<p>Example: A kitchen with multiple burners. If I started frying chicken on one burner, I can fry something else on a different burner.</p>
 </section>
 <section class="slide level2">
 
-<p>Hornilla == Proceso en la PC</p>
-<div title="Cuidado">
+<p>Burner == Process on the PC</p>
+<div title="Caution">
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Cuidado</strong></p>
+<p><strong>Caution</strong></p>
 </div>
 <div class="callout-content">
-<p>A más hornillas, también es más fácil quemar la comida!</p>
+<p>More burners also make it easier to burn the food!</p>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="posibles-complicaciones" class="slide level2">
-<h2>Posibles complicaciones</h2>
+<section id="possible-complications" class="slide level2">
+<h2>Possible complications</h2>
 <ul>
-<li>El código se hace más dificil de entender</li>
-<li>Sin adecuado control, pueden sobreescribir sus resultados</li>
-<li>Lógica circular. Proceso A espera a Proceso B, quien espera a Proceso A</li>
-<li>Incrementa la dificultad para hacer debugging porque los errores ocurren en otro lado</li>
-<li>Mayor consumo de energía</li>
+<li>The code becomes harder to understand</li>
+<li>Without proper control, results can overwrite each other</li>
+<li>Circular logic. Process A waits for Process B, which waits for Process A</li>
+<li>Increases difficulty in debugging because errors occur elsewhere</li>
+<li>Higher energy consumption</li>
 </ul>
 </section>
-<section id="beneficios" class="slide level2">
-<h2>Beneficios</h2>
+<section id="benefits" class="slide level2">
+<h2>Benefits</h2>
 <ul>
-<li>Operaciones largas no bloquean a otras operaciones</li>
-<li>Flexibilidad: mi sistema se adapta a retrasos inesperados</li>
-<li>La aplicación se mantiene responsiva, no se “cuelga”</li>
-<li>Uso eficiente de recursos. “Pagué por 8 procesadores y voy a usar 8 procesadores”.</li>
-<li>Escalabilidad a otro nivel</li>
+<li>Long operations don’t block other operations</li>
+<li>Flexibility: my system adapts to unexpected delays</li>
+<li>The application remains responsive, doesn’t “hang”</li>
+<li>Efficient use of resources. “I paid for 8 processors and I’m going to use 8 processors.”</li>
+<li>Scalability to a whole different level</li>
 </ul>
 </section>
-<section id="casos-de-uso" class="slide level2">
-<h2>Casos de uso</h2>
+<section id="use-cases" class="slide level2">
+<h2>Use cases</h2>
 <ul>
-<li>Operaciones I/O:
+<li>I/O operations:
 <ul>
-<li>Query a bases de datos</li>
-<li>Solicitudes a APIs</li>
+<li>Database queries</li>
+<li>API requests</li>
 </ul></li>
-<li>Cálculos intensivos</li>
+<li>Intensive calculations</li>
 </ul>
 </section>
-<section id="qué-necesito" class="slide level2">
-<h2>¿Qué necesito?</h2>
+<section id="what-do-i-need" class="slide level2">
+<h2>What do I need?</h2>
 <ul>
-<li>CPU con varios núcleos/hilos.</li>
-<li>Paquetes:
+<li>CPU with multiple cores/threads.</li>
+<li>Packages:
 <ul>
 <li>{promises}</li>
 <li>{future}</li>
 <li>ExtendedTask (Shiny 1.8.1+)</li>
 </ul></li>
 </ul>
-<div title="Nota">
+<div title="Note">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Nota</strong></p>
+<p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>ExtendedTask es un recurso bastante nuevo. También es posible usar solo <code>future()</code> o <code>future_promise()</code> dentro de un reactive para lograr un efecto similar, aunque con menos ventajas.</p>
+<p>ExtendedTask is a fairly new resource. It’s also possible to use just <code>future()</code> or <code>future_promise()</code> inside a reactive to achieve a similar effect, albeit with different advantages.</p>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="setup-inicial" class="slide level2">
-<h2>Setup inicial</h2>
+<section id="initial-setup" class="slide level2">
+<h2>Initial setup</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18" data-code-line-numbers="|4-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">library</span>(shiny)</span>
 <span id="cb18-2"><a href=""></a><span class="fu">library</span>(bslib)</span>
@@ -891,47 +901,47 @@ Samuel Calderon
 <span id="cb18-8"><a href=""></a></span>
 <span id="cb18-9"><a href=""></a>survey <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(<span class="st">"data/survey.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Esto le dice al proceso que corre la app que los <em>futures</em> creados se resuelvan en sesiones paralelas.</p>
+<p>This tells the process running the app that created <em>futures</em> will be resolved in parallel sessions.</p>
 </section>
-<section id="procedimiento" class="slide level2">
-<h2>Procedimiento</h2>
+<section id="procedure" class="slide level2">
+<h2>Procedure</h2>
 <ol type="1">
-<li>Crear un objeto <code>ExtendedTask</code>.</li>
-<li>Hacer bind a un task button</li>
-<li>Invocar la tarea</li>
-<li>Recuperar los resultados</li>
+<li>Create an <code>ExtendedTask</code> object.</li>
+<li>Bind to a task button</li>
+<li>Invoke the task</li>
+<li>Retrieve the results</li>
 </ol>
 <p><a href="https://shiny.posit.co/r/articles/improve/nonblocking/" class="uri">https://shiny.posit.co/r/articles/improve/nonblocking/</a></p>
 </section>
-<section id="punto-de-partida---ui" class="slide level2">
-<h2>Punto de partida - UI</h2>
+<section id="starting-point---ui" class="slide level2">
+<h2>Starting point - UI</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">page_sidebar</span>(</span>
 <span id="cb19-2"><a href=""></a>  <span class="at">sidebar =</span> <span class="fu">sidebar</span>(</span>
 <span id="cb19-3"><a href=""></a>    <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"region"</span>, ...),</span>
 <span id="cb19-4"><a href=""></a>    <span class="fu">sliderInput</span>(<span class="at">inputId =</span> <span class="st">"age"</span>, ...),</span>
-<span id="cb19-5"><a href=""></a>    <span class="fu">actionButton</span>(<span class="at">inputId =</span> <span class="st">"compute"</span>, <span class="at">label =</span> <span class="st">"Calcular"</span>)</span>
+<span id="cb19-5"><a href=""></a>    <span class="fu">actionButton</span>(<span class="at">inputId =</span> <span class="st">"compute"</span>, <span class="at">label =</span> <span class="st">"Compute"</span>)</span>
 <span id="cb19-6"><a href=""></a>  ),</span>
 <span id="cb19-7"><a href=""></a>  ...</span>
 <span id="cb19-8"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="modificaciones---ui" class="slide level2">
-<h2>Modificaciones - UI</h2>
+<section id="modifications---ui" class="slide level2">
+<h2>Modifications - UI</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">page_sidebar</span>(</span>
 <span id="cb20-2"><a href=""></a>  <span class="at">sidebar =</span> <span class="fu">sidebar</span>(</span>
 <span id="cb20-3"><a href=""></a>    <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"region"</span>, ...),</span>
 <span id="cb20-4"><a href=""></a>    <span class="fu">sliderInput</span>(<span class="at">inputId =</span> <span class="st">"age"</span>, ...),</span>
-<span id="cb20-5"><a href=""></a>    <span class="fu">input_task_button</span>(<span class="at">id =</span> <span class="st">"compute"</span>, <span class="at">label =</span> <span class="st">"Calcular"</span>)</span>
+<span id="cb20-5"><a href=""></a>    <span class="fu">input_task_button</span>(<span class="at">id =</span> <span class="st">"compute"</span>, <span class="at">label =</span> <span class="st">"Compute"</span>)</span>
 <span id="cb20-6"><a href=""></a>  ),</span>
 <span id="cb20-7"><a href=""></a>  ...</span>
 <span id="cb20-8"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Cambiamos el <code>actionButton()</code> por <code>bslib::input_task_button()</code>. Este botón tendrá un comportamiento especial.</p>
+<p>We change the <code>actionButton()</code> to <code>bslib::input_task_button()</code>. This button will have special behavior.</p>
 </section>
-<section id="punto-de-partida---server" class="slide level2">
-<h2>Punto de partida - Server</h2>
+<section id="starting-point---server" class="slide level2">
+<h2>Starting point - Server</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21" data-code-line-numbers="|3-5|8|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb21-2"><a href=""></a>  filtered <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
@@ -947,8 +957,8 @@ Samuel Calderon
 <span id="cb21-12"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="modificaciones---server" class="slide level2">
-<h2>Modificaciones - Server</h2>
+<section id="modifications---server" class="slide level2">
+<h2>Modifications - Server</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb22-2"><a href=""></a>  filter_task <span class="ot">&lt;-</span> ExtendedTask<span class="sc">$</span><span class="fu">new</span>(<span class="cf">function</span>(p_survey, p_region, p_age) {</span>
@@ -970,9 +980,9 @@ Samuel Calderon
 <span id="cb22-18"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="modificaciones---server-1" class="slide level2">
-<h2>Modificaciones - Server</h2>
-<p>Paso 1: Se creó un <code>ExtendedTask</code> que envuelve a una función.</p>
+<section id="modifications---server-1" class="slide level2">
+<h2>Modifications - Server</h2>
+<p>Step 1: An <code>ExtendedTask</code> was created, which wraps a function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23" data-code-line-numbers="|2|4-6|3,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb23-2"><a href=""></a>  filter_task <span class="ot">&lt;-</span> ExtendedTask<span class="sc">$</span><span class="fu">new</span>(<span class="cf">function</span>(p_survey, p_region, p_age) {</span>
@@ -987,11 +997,11 @@ Samuel Calderon
 <span id="cb23-11"><a href=""></a>  ...</span>
 <span id="cb23-12"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Dentro de la función, tenemos la lógica de nuestro cálculo envuelta en un <code>future_promise()</code>. La función asume una sesión en blanco.</p>
+<p>Inside the function, we have our calculation logic wrapped in a <code>future_promise()</code>. The function assumes a blank session.</p>
 </section>
-<section id="modificaciones---server-2" class="slide level2">
-<h2>Modificaciones - Server</h2>
-<p>Paso 2: Se hizo bind a un task button</p>
+<section id="modifications---server-2" class="slide level2">
+<h2>Modifications - Server</h2>
+<p>Step 2: Bind to a task button</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24" data-code-line-numbers="|5,8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb24-2"><a href=""></a>  filter_task <span class="ot">&lt;-</span> ExtendedTask<span class="sc">$</span><span class="fu">new</span>(<span class="cf">function</span>(...) {</span>
@@ -1005,25 +1015,25 @@ Samuel Calderon
 <span id="cb24-10"><a href=""></a>  ...</span>
 <span id="cb24-11"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div title="Nota">
+<div title="Note">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Nota</strong></p>
+<p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p><code>bind_task_button()</code> requiere el mismo id que <code>input_task_button()</code>. <code>bindEvent()</code> acepta cualquier reactive.</p>
+<p><code>bind_task_button()</code> requires the same id as <code>input_task_button()</code>. <code>bindEvent()</code> accepts any reactive.</p>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="modificaciones---server-3" class="slide level2">
-<h2>Modificaciones - Server</h2>
-<p>Paso 3: Invocar la tarea con <code>ExtendedTask$invoke()</code>.</p>
+<section id="modifications---server-3" class="slide level2">
+<h2>Modifications - Server</h2>
+<p>Step 3: Invoke the task with <code>ExtendedTask$invoke()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25" data-code-line-numbers="|2,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb25-2"><a href=""></a>  filter_task <span class="ot">&lt;-</span> ExtendedTask<span class="sc">$</span><span class="fu">new</span>(<span class="cf">function</span>(p_survey, p_region, p_age) {</span>
@@ -1040,11 +1050,11 @@ Samuel Calderon
 <span id="cb25-13"><a href=""></a>  ...</span>
 <span id="cb25-14"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Se le provee la data necesaria para trabajar. Tomar en cuenta que <code>invoke()</code> no tiene valor de retorno (es un side-effect).</p>
+<p>It’s provided with the necessary data to work. Note that <code>invoke()</code> has no return value (it’s a side-effect).</p>
 </section>
-<section id="modificaciones---server-4" class="slide level2">
-<h2>Modificaciones - Server</h2>
-<p>Paso 4: Recuperar los resultados con <code>ExtendedTask$result()</code>.</p>
+<section id="modifications---server-4" class="slide level2">
+<h2>Modifications - Server</h2>
+<p>Step 4: Retrieve results with <code>ExtendedTask$result()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26" data-code-line-numbers="|10|12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb26-2"><a href=""></a>  filter_task <span class="ot">&lt;-</span> ExtendedTask<span class="sc">$</span><span class="fu">new</span>(<span class="cf">function</span>(...) {</span>
@@ -1061,10 +1071,10 @@ Samuel Calderon
 <span id="cb26-13"><a href=""></a>  ...</span>
 <span id="cb26-14"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>result()</code> se comporta como cualquier reactive.</p>
+<p><code>result()</code> behaves like any reactive.</p>
 </section>
-<section id="modificaciones---server-5" class="slide level2">
-<h2>Modificaciones - Server</h2>
+<section id="modifications---server-5" class="slide level2">
+<h2>Modifications - Server</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb27-2"><a href=""></a>  filter_task <span class="ot">&lt;-</span> ExtendedTask<span class="sc">$</span><span class="fu">new</span>(<span class="cf">function</span>(p_survey, p_region, p_age) {</span>
@@ -1085,42 +1095,42 @@ Samuel Calderon
 <span id="cb27-17"><a href=""></a>  ...</span>
 <span id="cb27-18"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>¡Perdimos el cache! <code>ExtendedTask()</code> no es 100% compatible con las estrategias de caching vistas.</p>
+<p>We lost the cache! <code>ExtendedTask()</code> is not 100% compatible with the caching strategies seen.</p>
 </section>
-<section id="ejercicio-5---async" class="slide level2">
-<h2>Ejercicio 5 - Async</h2>
+<section id="exercise-5---async" class="slide level2">
+<h2>Exercise 5 - Async</h2>
 <ul>
-<li>Implementa async para uno de los gráficos</li>
-<li>Discusión: ¿vale la pena?</li>
+<li>Implement async for one of the plots</li>
+<li>Discussion: is it worth it?</li>
 </ul>
 </section>
-<section id="todo-junto" class="slide level2">
-<h2>Todo junto</h2>
-<p>Acá se desplegó la app con todas las mejoras vistas en los ejercicios. Además, <code>survey</code> utiliza la data completa, en lugar de una muestra por región.</p>
-<p>Enlace: <a href="https://01933e23-3162-29f7-ec09-ce351b4b4615.share.connect.posit.cloud/-" class="uri">https://01933e23-3162-29f7-ec09-ce351b4b4615.share.connect.posit.cloud/-</a></p>
+<section id="all-together" class="slide level2">
+<h2>All together</h2>
+<p>Here the app was deployed with all the improvements seen in the exercises. Also, <code>survey</code> uses the complete data, instead of a sample by region.</p>
+<p>Link: <a href="https://01933e23-3162-29f7-ec09-ce351b4b4615.share.connect.posit.cloud/-" class="uri">https://01933e23-3162-29f7-ec09-ce351b4b4615.share.connect.posit.cloud/-</a></p>
 
 <aside><div>
-<p>La plataforma permitió 8 GB de RAM y 2 núcleos de CPU.</p>
+<p>The platform allowed 8 GB of RAM and 2 CPU cores.</p>
 </div></aside></section></section>
 <section>
-<section id="temas-avanzados" class="title-slide slide level1 center">
-<h1>Temas avanzados</h1>
+<section id="advanced-topics" class="title-slide slide level1 center">
+<h1>Advanced topics</h1>
 
 </section>
-<section id="representando-la-complejidad" class="slide level2">
-<h2>Representando la complejidad</h2>
+<section id="representing-complexity" class="slide level2">
+<h2>Representing complexity</h2>
 <p><a href="https://www.freecodecamp.org/news/big-o-notation-why-it-matters-and-why-it-doesnt-1674cfa8a23c/">Big O notation</a></p>
 
 <img data-src="https://www.freecodecamp.org/news/content/images/2021/06/1_KfZYFUT2OKfjekJlCeYvuQ.jpeg" class="r-stretch"></section>
-<section id="entendiendo-la-complejidad" class="slide level2">
-<h2>Entendiendo la complejidad</h2>
-<p><a href="https://blog.algomaster.io/p/how-i-mastered-data-structures-and-algorithms">Algoritmos y estructuras de datos</a></p>
+<section id="understanding-complexity" class="slide level2">
+<h2>Understanding complexity</h2>
+<p><a href="https://blog.algomaster.io/p/how-i-mastered-data-structures-and-algorithms">Algorithms and data structures</a></p>
 
 <img data-src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Feb93edef-9bb2-45f5-a0cd-fd44f23e44f0_1728x1046.png" class="r-stretch"></section>
-<section id="enfrentando-la-complejidad" class="slide level2">
-<h2>Enfrentando la complejidad</h2>
+<section id="facing-complexity" class="slide level2">
+<h2>Facing complexity</h2>
 <ul>
-<li>Modularización
+<li>Modularization
 <ul>
 <li><a href="https://mastering-shiny.org/scaling-modules.html">shiny</a></li>
 <li><a href="https://github.com/klmr/box">box</a></li>
@@ -1128,15 +1138,15 @@ Samuel Calderon
 <li><a href="https://mastering-shiny.org/scaling-testing.html">Testing</a></li>
 <li>File structure</li>
 </ul>
-<p>¡<a href="https://appsilon.github.io/rhino/"><code>{rhino}</code></a> tiene todo esto!</p>
+<p><a href="https://appsilon.github.io/rhino/"><code>{rhino}</code></a> comes with all of this!</p>
 </section></section>
-<section id="preguntas" class="title-slide slide level1 center">
-<h1>Preguntas</h1>
+<section id="questions" class="title-slide slide level1 center">
+<h1>Questions</h1>
 
 </section>
 
-<section id="gracias" class="title-slide slide level1 center">
-<h1>¡Gracias!</h1>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank you!</h1>
 <ul>
 <li>Web: <a href="https://www.samuelenrique.com" class="uri">https://www.samuelenrique.com</a></li>
 <li>Github: <a href="https://github.com/calderonsamuel" class="uri">https://github.com/calderonsamuel</a></li>
