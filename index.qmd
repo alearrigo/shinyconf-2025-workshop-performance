@@ -215,24 +215,24 @@ Perform profiling on the **"app.R"** file.
 
 Keep in mind that you are testing this for a single user.
 
-## Optimización - Data
+## Optimization - Data  
 
-1. Usar opciones más rápidas para cargar datos
-2. Usar formatos de archivo más eficientes
-3. Pre-procesar los cálculos
-4. Usar bases de datos. Puede requerir aprender SQL.
+1. Use faster options for loading data  
+2. Use more efficient file formats  
+3. Pre-process calculations  
+4. Use databases (may require learning SQL)  
 
-¡Puedes combinar todo!
+You can combine all these strategies!  
 
-## Cargar datos más rápido
+## Loading Data Faster  
 
-- data.table::fread()
-- vroom::vroom()
-- readr::read_csv()
+- `data.table::fread()`  
+- `vroom::vroom()`  
+- `readr::read_csv()`  
 
-## Ejemplo
+## Example  
 
-NO ejecutar durante el workshop porque toma tiempo en correr
+**DO NOT** run during the workshop as it takes time to execute.
 
 ```r
 suppressMessages(
@@ -252,16 +252,16 @@ suppressMessages(
 ```
 
 
-## Formatos de datos eficientes:
+## Efficient Data Formats:  
 
-- Parquet (via {arrow})
-- Feather (compatibilidad con Python)
-- fst
-- RDS (nativo de R)
+- **Parquet** (via `{arrow}`)  
+- **Feather** (compatible with Python)  
+- **fst**  
+- **RDS** (native to R)  
 
-## Ejemplo
+## Example  
 
-NO ejecutar durante el workshop porque toma tiempo en correr
+**DO NOT** run during the workshop as it takes time to execute.
 
 ```r
 suppressMessages(
@@ -280,18 +280,18 @@ suppressMessages(
 #>       rds  558.5518  644.32460  782.37898  695.07300  860.85075 1379.519   100
 ```
 
-## Pre-procesar cálculos
+## Pre-processing Calculations  
 
-- Filtrado previo: Menos tamaño
-- Transformación o agregación previa: Menos tiempo
-- Uso de índices: Búsqueda rápida
+- **Pre-filtering**: Reduces size  
+- **Pre-transforming or aggregating**: Saves time  
+- **Using indexes**: Enables fast searches  
 
-Es, en esencia, *caching*. Personalmente, mi estrategia favorita. 
+This is essentially **caching**, which is personally my favorite strategy.  
 
-Difícil de usar si se requiere calcular en vivo, real-time (stock exchange, streaming data), o la data no puede ser guardada en cualquier lugar (seguridad, privacidad). 
+It can be challenging to use if real-time calculations are required (e.g., stock exchange, streaming data) or if data storage is restricted due to security or privacy concerns.
 
 
-## Sin pre-procesamiento
+## Without pre-processing
 
 ```{r}
 # app.R
@@ -306,7 +306,7 @@ server <- function(input, output) {
 }
 ```
 
-## Con pre-procesamiento
+## With pre-processing
 
 ```{r}
 # script.R
@@ -335,34 +335,34 @@ server <- function(input, output) {
 
 
 
-## Bases de Datos relacionales
+## Relational Databases
 
-- **Escalabilidad**: Las bases de datos pueden manejar grandes volúmenes de datos de manera eficiente.
-- **Consultas Rápidas**: Permiten realizar consultas complejas de manera rápida.
-- **Persistencia**: Los datos se almacenan de manera persistente, lo que permite su recuperación en cualquier momento.
+- **Scalability**: Databases can efficiently handle large volumes of data.
+- **Fast Queries**: They allow complex queries to be performed quickly.
+- **Persistence**: Data is stored persistently, allowing for retrieval at any time.
 
 ---
 
-Algunos ejemplos notables son SQLite, MySQL, PostgreSQL, DuckDB.
+Some notable examples are SQLite, MySQL, PostgreSQL, DuckDB.
 
-[freeCodeCamp](https://www.freecodecamp.org/learn/relational-database/) tiene un buen curso para principiantes.
+[freeCodeCamp](https://www.freecodecamp.org/learn/relational-database/) offers a good course for beginners.
   
 
-## Ejercicio 3 - Data
+## Exercise 3 - Data
 
-Implementa una estrategia de optimización
+Implement an optimization strategy
 
-# Optimización - Shiny
+# Optimization - Shiny
 
-## Cuando una app arranca
+## When an app starts
 
 ![](img/diagrama1.png)
 
 ---
 
-Del lado de shiny, optimizar consiste básicamente en hacer que la app (en realidad, el procesador) haga el menor trabajo posible.
+On the Shiny side, optimization basically consists of making the app (actually, the CPU) do as little work as possible.
 
-## Reducir reactividad
+## Reducing reactivity
 
 ```{r}
 #| code-line-numbers: "|3,4,5,9,10,11"
@@ -386,7 +386,7 @@ server <- function(input, output, session) {
 
 ---
 
-`reactive()` al rescate
+`reactive()` to the rescue
 
 ```{r}
 #| code-line-numbers: "|2-6|9,13"
@@ -411,12 +411,12 @@ server <- function(input, output, session) {
 ```
 
 ::: aside
-Usamos más de espacio (memoria) para reducir tiempo (CPU)
+We use more space (memory) to reduce time (CPU)
 :::
 
-## Controlar reactividad
+## Controlling reactivity
 
-Puedes encadenar `bindEvent()` a un `reactive()` u `observe()`.
+You can chain `bindEvent()` to a `reactive()` or `observe()`.
 
 ```{r}
 my_reactive <- reactive({
@@ -431,7 +431,7 @@ observe({
 ```
 
 ::: aside
-En versiones pasadas, esto se hacía con `observeEvent()` o `eventReactive()`.
+In previous versions, this was only possible with `observeEvent()` or `eventReactive()`.
 :::
 
 ---
@@ -442,7 +442,7 @@ ui <- page_sidebar(
   sidebar = sidebar(
     selectInput(inputId = "region", ...),
     sliderInput(inputId = "age", ...),
-    actionButton(inputId = "compute", label = "Calcular")
+    actionButton(inputId = "compute", label = "Compute")
   ),
   ...
 )
@@ -457,15 +457,15 @@ server <- function(input, output, session) {
 }
 ```
 
-Ahora `filtered()` solo se actualizará cuando haya interacción con `input$compute`. 
+Now `filtered()` will only update when there is interaction with `input$compute`. 
 
 ::: aside
-`ignoreNULL = FALSE` permite ejecutar el `reactive()` al iniciar la app.
+`ignoreNULL = FALSE` allows the `reactive()` to execute when the app starts.
 :::
 
-## Estrategias de Caché
+## Caching Strategies
 
-`bindCache()` nos permite guardar cómputos al vuelo en base a ciertas *keys*.
+`bindCache()` allows us to store computations on the fly based on certain *keys*.
 
 ```{r}
 #| code-line-numbers: "|7"
@@ -480,66 +480,66 @@ server <- function(input, output, session) {
 }
 ```
 
-Cuando una combinación vuelva a aparecer, se leerá el valor en lugar de recalcularlo. 
+When a combination appears again, the value will be read instead of recalculated. 
 
 ::: aside
-`bindEvent()` no es obligatorio para usar `bindCache()`.
+`bindEvent()` is not mandatory to use `bindCache()`.
 :::
 
 ---
 
-2. Niveles de caché:
-  - Nivel aplicación: `cache = "app"` (default)
-  - Nivel sesión: `cache = "session"`
-  - Personalizado: `cache object + opciones`
+2. Cache levels:
+  - Application level: `cache = "app"` (default)
+  - Session level: `cache = "session"`
+  - Custom: `cache object + options`
   
 ```{r}
 bindCache(..., cache = "app")
 ```
 
-Por defecto, se usará un máximo de 200 Mb de caché.
+By default, a maximum of 200 Mb of cache will be used.
   
 ::: aside
-Potencialmente mucho uso de memoria/storage, para reducir tiempo de procesamiento.
+Potentially high memory/storage usage to reduce processing time.
 :::
 
-## Comunicación servidor - navegador
+## Server-browser communication
 
-- Enviar datos desde el servidor hacia el navegador toma tiempo. 
-  - Datos grandes -> mayor tiempo de envío.
-  - Conexión lenta -> mayor tiempo de envío
-- Igualmente, si los datos son grandes, al navegador le cuesta más leerlos y mostrarlos al usuario. 
-Puede que la PC del usuario sea una tostadora!
+- Sending data from the server to the browser takes time. 
+  - Large data -> longer sending time.
+  - Slow connection -> longer sending time
+- Similarly, if the data is large, the browser takes longer to read and display it to the user. 
+The user's PC might be a toaster!
 
 ---
 
-- ¿Qué hacer?
-  - Reducir frecuencia de envíos (`bindEvent()`)
-  - Reducir tamaño de envíos
-  - Mandar lo mismo pero en partes más pequeñas (server-side processing o streaming)
+- What to do?
+  - Reduce frequency of transmissions (`bindEvent()`)
+  - Reduce size of transmissions
+  - Send the same information but in smaller parts (server-side processing or streaming)
   
-## Reducir tamaño de envíos
+## Reducing transmission size
 
-Es posible delegar ciertos cálculos al navegador. Por ejemplo, renderizar un gráfico con [`{plotly}`](https://plotly.com/ggplot2/) en lugar de `{ggplot2}`.
+It's possible to delegate certain calculations to the browser. For example, rendering a graph with [`{plotly}`](https://plotly.com/ggplot2/) instead of `{ggplot2}`.
 
 ```{r}
-plotly::plotlyOutput() # en lugar de plotOutput
-plotly::renderPlotly() # en lugar de renderPlot
+plotly::plotlyOutput() # instead of plotOutput
+plotly::renderPlotly() # instead of renderPlot
 ```
 
-Con ello, se manda la "receta" del gráfico en lugar del gráfico mismo. Al recibir la receta, el navegador se encarga de renderizarla.
+With this, the "recipe" of the graph is sent instead of the graph itself. Upon receiving the recipe, the browser handles rendering it.
 
 ---
 
-Estas funciones traducen sintaxis de `ggplot2` a sintaxis de `plotly.js` de manera bastante eficiente. Tiene soporte para muchos tipos de gráficos.
+These functions translate `ggplot2` syntax to `plotly.js` syntax quite efficiently. It supports many types of graphs.
 
 ![](img/shiny-plotly.png)
 
-Pero no te confíes, en muchos casos, el código va a necesitar retoques. Especialmente al usar extensiones de `ggplot2`.
+But don't trust it blindly, in many cases, the code will need adjustments. Especially when using `ggplot2` extensions.
 
 ---
 
-Otros paquetes similares:
+Other similar packages:
 
 - [ggiraph](https://davidgohel.github.io/ggiraph/)
 - [echarts4r](https://echarts4r.john-coene.com/)
@@ -549,39 +549,39 @@ Otros paquetes similares:
 
 ## Server-side processing
 
-En el caso de las tablas, el server-side processing permite paginar el resultado y enviar al navegador solo la página que está siendo mostrada en el momento.
+For tables, server-side processing allows paginating the result and sending to the browser only the page that is being displayed at the moment.
 
-El paquete `{DT}` es una opción solida.
+The `{DT}` package is a solid option.
 
 ```{r}
-DT::DTOutput() # en lugar de tableOutput()
-DT::renderDT() # en lugar de renderTable()
+DT::DTOutput() # instead of tableOutput()
+DT::renderDT() # instead of renderTable()
 ```
 
 ::: aside
-Si ya usabas `{DT}`, ¿sabías que hacía esto por defecto?
+If you were already using `{DT}`, did you know it did this by default?
 :::
 
 ---
 
-Otra opcion:
+Another option:
 
-- `{reactable}` en conjunto con `{reactable.extras}` (by Appsilon).
+- `{reactable}` together with `{reactable.extras}` (by Appsilon).
 
-## Ejercicio 4 - Shiny
+## Exercise 4 - Shiny
 
-Implementa alguna de las optimizaciones mencionadas.
+Implement one of the previously mentioned optimizations.
 
-# Optimización - Async
+# Optimization - Async
 
-## Programación síncrona
+## Synchronous programming
 
 ::: {.columns}
 
 ::: {.column}
 
-- Las tareas se ejecutan secuencialmente
-- Es fácil de entender e implementa
+- Tasks are executed sequentially
+- It's easy to understand and implement
 
 :::
 
@@ -593,16 +593,16 @@ Implementa alguna de las optimizaciones mencionadas.
 
 :::
 
-Ejemplo: Una cocina con una hornilla. Si empecé a freir pollo, no puedo freir nada hasta terminar de freir el pollo.
+Example: A kitchen with one burner. If I started frying chicken, I can't fry anything else until I finish frying the chicken.
 
 
-## Proramación asíncrona
+## Asynchronous programming
 
 ::: {.columns}
 ::: {.column}
 
-- Las tareas pueden iniciar y ejecutarse independientemente
-- Mientras se procesa una tarea, otras pueden ser iniciadas o completadas.
+- Tasks can start and run independently
+- While one task is being processed, others can be started or completed.
 
 :::
 
@@ -613,53 +613,53 @@ Ejemplo: Una cocina con una hornilla. Si empecé a freir pollo, no puedo freir n
 
 :::
 
-Ejemplo: Una cocina con múltiples hornillas. Si empecé a freir pollo en una hornilla, puedo freir otra cosa en una hornilla diferente.
+Example: A kitchen with multiple burners. If I started frying chicken on one burner, I can fry something else on a different burner.
 
 ---
 
-Hornilla == Proceso en la PC
+Burner == Process on the PC
 
-::: {.callout-warning title="Cuidado"}
-A más hornillas, también es más fácil quemar la comida!
+::: {.callout-warning title="Caution"}
+More burners also make it easier to burn the food!
 :::
 
 
-## Posibles complicaciones
+## Possible complications
 
-- El código se hace más dificil de entender
-- Sin adecuado control, pueden sobreescribir sus resultados
-- Lógica circular. Proceso A espera a Proceso B, quien espera a Proceso A
-- Incrementa la dificultad para hacer debugging porque los errores ocurren en otro lado
-- Mayor consumo de energía
+- The code becomes harder to understand
+- Without proper control, results can overwrite each other
+- Circular logic. Process A waits for Process B, which waits for Process A
+- Increases difficulty in debugging because errors occur elsewhere
+- Higher energy consumption
 
-## Beneficios
+## Benefits
 
-- Operaciones largas no bloquean a otras operaciones
-- Flexibilidad: mi sistema se adapta a retrasos inesperados
-- La aplicación se mantiene responsiva, no se "cuelga"
-- Uso eficiente de recursos. "Pagué por 8 procesadores y voy a usar 8 procesadores".
-- Escalabilidad a otro nivel
+- Long operations don't block other operations
+- Flexibility: my system adapts to unexpected delays
+- The application remains responsive, doesn't "hang"
+- Efficient use of resources. "I paid for 8 processors and I'm going to use 8 processors."
+- Scalability to a whole different level
 
-## Casos de uso
+## Use cases
 
-- Operaciones I/O:
-  - Query a bases de datos
-  - Solicitudes a APIs
-- Cálculos intensivos
+- I/O operations:
+  - Database queries
+  - API requests
+- Intensive calculations
 
-## ¿Qué necesito?
+## What do I need?
 
-- CPU con varios núcleos/hilos.
-- Paquetes:
+- CPU with multiple cores/threads.
+- Packages:
   - {promises}
   - {future}
   - ExtendedTask (Shiny 1.8.1+)
   
-::: {.callout-note title="Nota"}
-ExtendedTask es un recurso bastante nuevo. También es posible usar solo `future()` o `future_promise()` dentro de un reactive para lograr un efecto similar, aunque con menos ventajas.
+::: {.callout-note title="Note"}
+ExtendedTask is a fairly new resource. It's also possible to use just `future()` or `future_promise()` inside a reactive to achieve a similar effect, albeit with different advantages.
 :::
 
-## Setup inicial
+## Initial setup
 
 ```{r}
 #| code-line-numbers: "|4-7"
@@ -674,18 +674,18 @@ plan(multisession)
 survey <- arrow::read_parquet("data/survey.parquet")
 ```
 
-Esto le dice al proceso que corre la app que los *futures* creados se resuelvan en sesiones paralelas.
+This tells the process running the app that created *futures* will be resolved in parallel sessions.
 
-## Procedimiento
+## Procedure
 
-1. Crear un objeto `ExtendedTask`.
-2. Hacer bind a un task button
-3. Invocar la tarea
-4. Recuperar los resultados
+1. Create an `ExtendedTask` object.
+2. Bind to a task button
+3. Invoke the task
+4. Retrieve the results
 
 <https://shiny.posit.co/r/articles/improve/nonblocking/>
   
-## Punto de partida - UI
+## Starting point - UI
 
 ```{r}
 #| code-line-numbers: "|5"
@@ -693,13 +693,13 @@ ui <- page_sidebar(
   sidebar = sidebar(
     selectInput(inputId = "region", ...),
     sliderInput(inputId = "age", ...),
-    actionButton(inputId = "compute", label = "Calcular")
+    actionButton(inputId = "compute", label = "Compute")
   ),
   ...
 )
 ```
 
-## Modificaciones - UI
+## Modifications - UI
 
 ```{r}
 #| code-line-numbers: "5"
@@ -707,15 +707,15 @@ ui <- page_sidebar(
   sidebar = sidebar(
     selectInput(inputId = "region", ...),
     sliderInput(inputId = "age", ...),
-    input_task_button(id = "compute", label = "Calcular")
+    input_task_button(id = "compute", label = "Compute")
   ),
   ...
 )
 ```
 
-Cambiamos el `actionButton()` por `bslib::input_task_button()`. Este botón tendrá un comportamiento especial.
+We change the `actionButton()` to `bslib::input_task_button()`. This button will have special behavior.
 
-## Punto de partida - Server
+## Starting point - Server
 
 ```{r}
 #| code-line-numbers: "|3-5|8|7"
@@ -733,7 +733,7 @@ server <- function(input, output, session) {
 }
 ```
 
-## Modificaciones - Server
+## Modifications - Server
 
 ```{r}
 server <- function(input, output, session) {
@@ -756,9 +756,9 @@ server <- function(input, output, session) {
 }
 ```
 
-## Modificaciones - Server
+## Modifications - Server
 
-Paso 1: Se creó un `ExtendedTask` que envuelve a una función. 
+Step 1: An `ExtendedTask` was created, which wraps a function. 
 
 ```{r}
 #| code-line-numbers: "|2|4-6|3,7"
@@ -777,11 +777,11 @@ server <- function(input, output, session) {
 ```
 
 
-Dentro de la función, tenemos la lógica de nuestro cálculo envuelta en un `future_promise()`. La función asume una sesión en blanco.
+Inside the function, we have our calculation logic wrapped in a `future_promise()`. The function assumes a blank session.
 
-## Modificaciones - Server
+## Modifications - Server
 
-Paso 2: Se hizo bind a un task button
+Step 2: Bind to a task button
 
 ```{r}
 #| code-line-numbers: "|5,8"
@@ -799,13 +799,13 @@ server <- function(input, output, session) {
 ```
 
 
-::: {.callout-note title="Nota"}
-`bind_task_button()` requiere el mismo id que `input_task_button()`. `bindEvent()` acepta cualquier reactive.
+::: {.callout-note title="Note"}
+`bind_task_button()` requires the same id as `input_task_button()`. `bindEvent()` accepts any reactive.
 :::
 
-## Modificaciones - Server
+## Modifications - Server
 
-Paso 3: Invocar la tarea con `ExtendedTask$invoke()`.
+Step 3: Invoke the task with `ExtendedTask$invoke()`.
 
 ```{r}
 #| code-line-numbers: "|2,7"
@@ -825,11 +825,11 @@ server <- function(input, output, session) {
 }
 ```
 
-Se le provee la data necesaria para trabajar. Tomar en cuenta que `invoke()` no tiene valor de retorno (es un side-effect).
+It's provided with the necessary data to work. Note that `invoke()` has no return value (it's a side-effect).
 
-## Modificaciones - Server
+## Modifications - Server
 
-Paso 4: Recuperar los resultados con `ExtendedTask$result()`.
+Step 4: Retrieve results with `ExtendedTask$result()`.
 
 ```{r}
 #| code-line-numbers: "|10|12"
@@ -849,9 +849,9 @@ server <- function(input, output, session) {
 }
 ```
 
-`result()` se comporta como cualquier reactive. 
+`result()` behaves like any reactive. 
 
-## Modificaciones - Server
+## Modifications - Server
 
 ```{r}
 server <- function(input, output, session) {
@@ -874,52 +874,52 @@ server <- function(input, output, session) {
 }
 ```
 
-¡Perdimos el cache! `ExtendedTask()` no es 100% compatible con las estrategias de caching vistas.
+We lost the cache! `ExtendedTask()` is not 100% compatible with the caching strategies seen.
 
-## Ejercicio 5 - Async
+## Exercise 5 - Async
 
-- Implementa async para uno de los gráficos
-- Discusión: ¿vale la pena?
+- Implement async for one of the plots
+- Discussion: is it worth it?
 
-## Todo junto
+## All together
 
-Acá se desplegó la app con todas las mejoras vistas en los ejercicios. Además, `survey` utiliza la data completa, en lugar de una muestra por región.
+Here the app was deployed with all the improvements seen in the exercises. Also, `survey` uses the complete data, instead of a sample by region.
 
-Enlace: <https://01933e23-3162-29f7-ec09-ce351b4b4615.share.connect.posit.cloud/->
+Link: <https://01933e23-3162-29f7-ec09-ce351b4b4615.share.connect.posit.cloud/->
 
 ::: aside
-La plataforma permitió 8 GB de RAM y 2 núcleos de CPU.
+The platform allowed 8 GB of RAM and 2 CPU cores.
 :::
 
-# Temas avanzados
+# Advanced topics
 
-## Representando la complejidad
+## Representing complexity
 
 [Big O notation](https://www.freecodecamp.org/news/big-o-notation-why-it-matters-and-why-it-doesnt-1674cfa8a23c/)
 
 ![](https://www.freecodecamp.org/news/content/images/2021/06/1_KfZYFUT2OKfjekJlCeYvuQ.jpeg)
 
 
-## Entendiendo la complejidad
+## Understanding complexity
 
-[Algoritmos y estructuras de datos](https://blog.algomaster.io/p/how-i-mastered-data-structures-and-algorithms)
+[Algorithms and data structures](https://blog.algomaster.io/p/how-i-mastered-data-structures-and-algorithms)
 
 ![](https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Feb93edef-9bb2-45f5-a0cd-fd44f23e44f0_1728x1046.png)
 
-## Enfrentando la complejidad
+## Facing complexity
 
-- Modularización
+- Modularization
   - [shiny](https://mastering-shiny.org/scaling-modules.html)
   - [box](https://github.com/klmr/box)
 - [Testing](https://mastering-shiny.org/scaling-testing.html)
 - File structure
 
-¡[`{rhino}`](https://appsilon.github.io/rhino/) tiene todo esto!
+[`{rhino}`](https://appsilon.github.io/rhino/) comes with all of this!
 
 
-# Preguntas
+# Questions
 
-# ¡Gracias!
+# Thank you!
 
 - Web: <https://www.samuelenrique.com>
 - Github: <https://github.com/calderonsamuel>
