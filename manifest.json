@@ -4797,7 +4797,7 @@
       "checksum": "bbf971a56d0e9ae07fee44439b0f3240"
     },
     "app.R": {
-      "checksum": "1863c848ab8afea300929d612886e931"
+      "checksum": "cac6737160a0adc76e69f41749bccce5"
     },
     "data/survey.csv": {
       "checksum": "ef4588ba5debde0e8d4c2616ca985a89"
@@ -5088,7 +5088,7 @@
       "checksum": "4780b071463d2ee7702d6ee59b91e927"
     },
     "scripts/03_app_fast.R": {
-      "checksum": "435c0d0ad31cfefeb0007fd1886a2d2f"
+      "checksum": "4ab2fdbef41f6870ae5a1992228d0a14"
     }
   },
   "users": null
