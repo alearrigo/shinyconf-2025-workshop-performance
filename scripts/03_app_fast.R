@@ -8,8 +8,6 @@ plan(multisession)
 
 survey <- arrow::read_parquet("data/survey.parquet")
 
-my_cache <- cachem::cache_mem()
-
 ui <- page_sidebar(
   
   sidebar = sidebar(
@@ -66,7 +64,7 @@ server <- function(input, output, session) {
           dplyr::filter(region == p_region) |> 
           dplyr::filter(age <= p_age)
       })
-    }, cache = my_cache)
+    }, cache = getShinyOption("cache"))
   ) |> 
     bind_task_button("compute")
   
