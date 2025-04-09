@@ -70,7 +70,7 @@ To see more open positions: <https://www.appsilon.com/careers>
 
 What is a computer? The interaction of three main components
 
-![](img/computer-core-elements.png)
+![](img/computer-core-elements-eng.png)
 
 ## What is Optimization?  
 
@@ -356,7 +356,7 @@ Implement an optimization strategy
 
 ## When an app starts
 
-![](img/diagrama1.png)
+![](img/diagrama1-eng.png)
 
 ---
 
