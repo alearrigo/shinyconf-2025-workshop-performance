@@ -8,6 +8,8 @@ plan(multisession)
 
 survey <- arrow::read_parquet("data/survey.parquet")
 
+my_cache <- cachem::cache_mem()
+
 ui <- page_sidebar(
   
   sidebar = sidebar(
@@ -57,13 +59,15 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
-  filter_task <- ExtendedTask$new(function(p_survey, p_region, p_age) {
-    future_promise({
-      p_survey |> 
-        dplyr::filter(region == p_region) |> 
-        dplyr::filter(age <= p_age)
-    })
-  }) |> 
+  filter_task <- ExtendedTask$new(
+    memoise::memoise(function(p_survey, p_region, p_age) {
+      future_promise({
+        p_survey |> 
+          dplyr::filter(region == p_region) |> 
+          dplyr::filter(age <= p_age)
+      })
+    }, cache = my_cache)
+  ) |> 
     bind_task_button("compute")
   
   observe(filter_task$invoke(survey, input$region, input$age)) |> 
