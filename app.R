@@ -1,9 +1,14 @@
 library(shiny)
 library(bslib)
 library(tidyverse)
+library(future)
+library(promises)
 
-survey <- read.csv("data/survey.csv") |> 
-  slice_sample(n = 5000, by = region)  
+plan(multisession)
+
+survey <- arrow::read_parquet("data/survey.parquet")
+
+my_cache <- cachem::cache_mem()
 
 ui <- page_sidebar(
   
@@ -20,6 +25,10 @@ ui <- page_sidebar(
       max = 100,
       value = 100,
       step = 10
+    ),
+    input_task_button(
+      id = "compute", 
+      label = "Calcular"
     )
   ),
   
@@ -27,22 +36,22 @@ ui <- page_sidebar(
   
   card(
     max_height = "50%",
-    tableOutput("table")
+    DT::DTOutput("table")
   ),
   
   layout_columns(
     col_widths = c(4, 4, 4),
     
     card(
-      plotOutput("histogram")
+      plotly::plotlyOutput("histogram")
     ),
     card(
       full_screen = TRUE,
-      plotOutput("by_transport")
+      plotly::plotlyOutput("by_transport")
     ),
     card(
       full_screen = TRUE,
-      plotOutput("by_type")
+      plotly::plotlyOutput("by_type")
     )
     
   )
@@ -50,35 +59,45 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
-  output$table <- renderTable({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age)
+  filter_task <- ExtendedTask$new(
+    memoise::memoise(function(p_survey, p_region, p_age) {
+      future_promise({
+        p_survey |> 
+          dplyr::filter(region == p_region) |> 
+          dplyr::filter(age <= p_age)
+      })
+    }, cache = my_cache)
+  ) |> 
+    bind_task_button("compute")
+  
+  observe(filter_task$invoke(survey, input$region, input$age)) |> 
+    bindEvent(input$compute, ignoreNULL = FALSE)
+  
+  filtered <- reactive({
+    filter_task$result()
   })
   
-  output$histogram <- renderPlot({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age) |> 
+  output$table <- DT::renderDT({
+    filtered()
+  })
+  
+  output$histogram <- plotly::renderPlotly({
+    filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
       theme_light()
   })
   
-  output$by_transport <- renderPlot({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age) |> 
+  output$by_transport <- plotly::renderPlotly({
+    filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
       facet_wrap(~transport) +
       theme_light()
   })
   
-  output$by_type <- renderPlot({
-    survey |> 
-      filter(region == input$region) |> 
-      filter(age <= input$age) |> 
+  output$by_type <- plotly::renderPlotly({
+    filtered() |> 
       ggplot(aes(temps_trajet_en_heures)) +
       geom_histogram(bins = 20) +
       facet_wrap(~type) +
@@ -87,3 +106,4 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+
