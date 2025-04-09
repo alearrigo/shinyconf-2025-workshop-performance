@@ -1547,8 +1547,8 @@
       }
     },
     "ggplot2": {
-      "Source": "P3M",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "ggplot2",
         "Version": "3.5.1",
@@ -4797,7 +4797,7 @@
       "checksum": "bbf971a56d0e9ae07fee44439b0f3240"
     },
     "app.R": {
-      "checksum": "2dc9e6ced239597d343e80e8e5612fa0"
+      "checksum": "1863c848ab8afea300929d612886e931"
     },
     "data/survey.csv": {
       "checksum": "ef4588ba5debde0e8d4c2616ca985a89"
@@ -5088,7 +5088,7 @@
       "checksum": "4780b071463d2ee7702d6ee59b91e927"
     },
     "scripts/03_app_fast.R": {
-      "checksum": "99ccef655be67ac7434c1a5f5262b474"
+      "checksum": "435c0d0ad31cfefeb0007fd1886a2d2f"
     }
   },
   "users": null
