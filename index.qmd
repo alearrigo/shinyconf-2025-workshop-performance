@@ -18,7 +18,7 @@ execute:
 
 ## Material
 
-<https://github.com/Appsilon/latin-r-2024>
+<https://github.com/Appsilon/shinyconf-2025-workshop-performance>
 
 ## Workshop Structure (3 hours)
 
